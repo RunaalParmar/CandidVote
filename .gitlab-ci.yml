@@ -1,0 +1,19 @@
+image: node:10.5.0
+
+stages:
+
+  - review_deploy
+
+  
+preview :
+  stage: review_deploy
+  only:
+    - branches
+  except:
+    - master
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: http://woke-$CI_ENVIRONMENT_SLUG.surge.sh
+  script:
+    - npm install
+    - node_modules/.bin/surge --project ./Register_page --domain  woke-$CI_ENVIRONMENT_SLUG.surge.sh
