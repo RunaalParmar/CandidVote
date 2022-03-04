@@ -19,22 +19,22 @@
     <h2>CandidVoTe</h2>
     <div class="container" id="container">
       <div class="form-container sign-up-container">
-        <form action="#">
+        <form action="#" id="signUpForm">
           <h1>Create Account</h1>
-          <input type="text" placeholder="Organization name" required />
-          <input type="text" placeholder="User name" required />
-          <input type="email" placeholder="Email" required />
-          <input type="password" placeholder="Password" required />
-          <button>Sign Up</button>
+          <input type="text" class="signUpFields" id="orgName" placeholder="Organization name" required />
+          <input type="text" class="signUpFields" id="username" placeholder="User name" required />
+          <input type="email" class="signUpFields" id="email" placeholder="Email" required />
+          <input type="password" class="signUpFields" id="password" placeholder="Password" required />
+          <button id="realSignUpButton" type="submit">Sign Up</button>
         </form>
       </div>
       <div class="form-container sign-in-container">
-        <form action="#">
+        <form action="#" id="signInForm">
           <h1>Sign in</h1>
-          <input type="email" placeholder="Email" required />
-          <input type="password" placeholder="Password" required />
+          <input type="email" class="signInFields" id="signInEmail" placeholder="Email" required />
+          <input type="password" class="signInFields" id="signInPassword" placeholder="Password" required />
           <a href="#">Forgot your password?</a>
-          <button>Sign In</button>
+          <button id="realSignInButton" type="submit">Sign In</button>
         </form>
       </div>
       <div class="overlay-container">
@@ -42,7 +42,7 @@
           <div class="overlay-panel overlay-left">
             <h1>Welcome Back!</h1>
             <p>
-              To access your Votaing poratal please Sign in with your credential
+              To access your voting portal please sign in with your credentials
             </p>
             <button class="ghost" id="signIn">Sign In</button>
           </div>
@@ -57,6 +57,6 @@
         </div>
       </div>
     </div>
-    <script src="src/signInSignUp.js"></script>
+    <script type="module" src="signInSignUp.js"></script>
   </body>
 </html>
