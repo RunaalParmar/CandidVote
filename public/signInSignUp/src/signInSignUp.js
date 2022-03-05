@@ -1,9 +1,9 @@
 const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
 
-const realSignUpButton = document.getElementById('signUp');
+const realSignUpButton = document.getElementById('realSignUpButton');
 const signUpForm = document.getElementById('signUpForm');
-const realSignInButton = document.getElementById('signIn');
+const realSignInButton = document.getElementById('realSignInButton');
 const signInForm = document.getElementById('signInForm');
 
 const container = document.getElementById('container');

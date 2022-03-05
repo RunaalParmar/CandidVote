@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="UTF-8" />
-        <title>CandidVoTe-login-signup</title>
+        <title>CandidVote : Registration</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <link rel="stylesheet" href="style.css" />
         <!--font awesome cnd link-->
@@ -12,26 +12,26 @@
     <body>
         <div class="container">
             <div class="title">Registration</div>
-            <form action="#">
+            <form action="#" id ="registerForm">
                 <div class="user-details">
                     <div class="input-box">
                         <span class="details">Firstname</span>
-                        <input type="text" placeholder="eg John" required>
+                        <input type="text" placeholder="eg John" id ="firstName" class="registerField" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Surname</span>
-                        <input type="text" placeholder="Doe" required>
+                        <input type="text" placeholder="Doe" id ="surName" class="registerField" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Current Residence Address</span>
-                        <input type="text" placeholder="" required>
+                        <input type="text" placeholder="225B Cederbrae Avenue" id ="address" class="registerField"  required>
                     </div>
 
                     <div class="input-box">
                         <div class="cover">
                             <div class="selector">
                                 <span class="selector_label">Province</span>
-                                <select name="province" id="pv-1" >
+                                <select name="province" class="selector_style" id="province" class="registerField">
                                     <!-- <option value="option">Option </option> -->
                                     <option value="Ontario">Ontario</option>
                                     <option value="Manitoba">Manitoba</option>
@@ -51,7 +51,7 @@
 
                             <div class="selector">
                                 <span class="selector_label">City</span>
-                                <input type="text" placeholder="eg Waterloo" required>
+                                <input type="text" placeholder="eg Waterloo" id ="city" class="registerField" required>
                             </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                     <div class="input-box">
                         <div class="selector">
                             <span class="details">Registering As</span>
-                            <select name="authLevel" id="pv-1">
+                            <select name="authLevel" class="selector_style" id="identity" class="registerField">
                                 <!-- <option value="option">Option</option> -->
                                 <option value="Voter">Voter</option>
                                 <option value="Admin">Admin</option>
@@ -69,22 +69,22 @@
 
                     <div class="input-box">
                         <span class="details">Telephone</span>
-                        <input type="tel" placeholder="Mobile Number" required>
+                        <input type="tel" placeholder="Mobile Number" id="cellPhone" class="registerField" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Zipcode</span>
-                        <input type="text"  placeholder="" required>
+                        <input type="text"  placeholder="" id="zipCode" class="registerField" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Birth Date</span>
-                        <input type="date" placeholder="DD/MM/YYYY" required>
+                        <input type="date" placeholder="DD/MM/YYYY" id="date" class="registerField" required>
                     </div>
                 </div>
 
                 <div class="gender-details">
-                    <input type="radio" name="gender" id="dot-1">
-                    <input type="radio" name="gender" id="dot-2">
-                    <input type="radio" name="gender" id="dot-3">
+                    <input type="radio" name="gender" id="dot-1" class="registerField" >
+                    <input type="radio" name="gender" id="dot-2" class="registerField" >
+                    <input type="radio" name="gender" id="dot-3" class="registerField" >
                     <span class="gender-title">Gender</span>
                     <div class="category">
                         <label for="dot-1">
@@ -103,9 +103,10 @@
                 </div>
 
                 <div class="button">
-                    <input type="submit" value="Register">
+                    <input type="submit" value="Register" id="registerButton">
                 </div>
             </form>
         </div>
+        <script type="module" src="registration.js"></script>
     </body>
 </html>
