@@ -47,48 +47,37 @@ signUpForm.addEventListener('submit', (event) => {
     //         console.error('Error:', error);
     //     })
 
-
-    // fetch(localhost_addr + '/users/signUp', {
-    //     method: 'POST',
-    //     headers: {
-    //     	'Accept': 'application/json',
-    //     	'Content-Type': 'application/json'
-    // 	},
-    //     body: JSON.stringify(formData)
-    // })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log('New User Info', data);
-    //         if(data.msg == "Email already exists!") {
-    //             document.getElementById('errorMessage').innerHTML = data.msg;
-    //         }
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error:', error);
-    //     })
 });
 
-signInForm.addEventListener('submit', (event) => {
+
+(function() {
+  
+  // const resgisterButton = document.getElementById('registerButton')
+  const registerForm = document.getElementById('registerForm')
+  
+  const localhost_addr = 'http://localhost:5000';
+  const formData = {};
+  for(const click of registerForm.querySelectorAll('.registerField'))
+    {
+      formData[click.id] = click.value;
+    }
+  registerForm.addEventListener('submit' , (event) =>{
     event.preventDefault()
-
-    const signInEmail = document.getElementById('signInEmail').value;
-    const signInPassword = document.getElementById('signInPassword').value;
-
-    const formData = {email: signInEmail, password: signInPassword}
-
-    fetch(localhost_addr + '/users/signIn', {
-        method: 'POST',
-        headers: {
-        	'Accept': 'application/json',
-        	'Content-Type': 'application/json'
-    	},
-        body: JSON.stringify(formData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('New User Info', data)
-        })
-        .catch((error) => {
-            console.error('Error:', error)
-        })
-});
+    
+    fetch(localhost_addr + '/users/registers', {
+      method:'POST',
+      
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      },
+      
+      body:JSON.stringify(formData)
+      
+    }).then(response =>{ response.json()})
+      .then(data =>{console.log('New User Info' , data)})
+      .catch((error) => {console.error('Error' , error)})
+    
+  })
+  
+})()
