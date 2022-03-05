@@ -43,7 +43,7 @@ connectToDB();
 app.options("*", cors({ origin: localhost_addr + port, optionsSuccessStatus: 200 }));
 app.use(cors({ origin: localhost_addr + port, optionsSuccessStatus: 200 }));
 
-app.use('/', express.static('./public/signInSignUp')); // TODO: adjust address.
+app.use('/', express.static('public'));
 app.use(bodyParser.json());
 
 app.use(session({

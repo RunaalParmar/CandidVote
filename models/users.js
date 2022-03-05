@@ -46,7 +46,7 @@ const userModel = new mongoose.Schema({ // Changed from userSchema.
     },
     address: {
         type: String,
-        
+        required:true,
     },
     zip: {
         type: String,
