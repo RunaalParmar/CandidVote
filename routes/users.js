@@ -84,7 +84,7 @@ router.post('/signUp', (req, res, next) => {
     User.findOne({email: req.body.email}).then((user) => {
         if (user) {
             // Email exists.
-            res.status(403).send("email already exists");
+            res.status(403).send({msg:"Email already exists!"});
         
         } else {
             // Create new user.
@@ -92,10 +92,10 @@ router.post('/signUp', (req, res, next) => {
                 uid,
                 email: req.body.email,
                 orgName: req.body.orgName,
-                username,
+                username: req.body.username,
                 hash, // TODO
                 salt, // TODO
-                authLevel: "admin" // TODO
+                // authLevel: "admin"
             });
 
             newUser.save()
@@ -105,6 +105,6 @@ router.post('/signUp', (req, res, next) => {
                 });
         }
     })
-}, passport.authenticate('local', {failureRedirect: 'login-failure', successRedirect: 'login-success'}));
+}, passport.authenticate('local', {failureRedirect: 'login-failure', successRedirect: '/registration/registration.html'}));
 
 module.exports = router;
