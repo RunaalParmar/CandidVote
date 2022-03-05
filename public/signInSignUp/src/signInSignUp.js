@@ -1,9 +1,7 @@
 const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
 
-const realSignUpButton = document.getElementById('signUp');
 const signUpForm = document.getElementById('signUpForm');
-const realSignInButton = document.getElementById('signIn');
 const signInForm = document.getElementById('signInForm');
 
 const container = document.getElementById('container');
@@ -24,24 +22,30 @@ signUpForm.addEventListener('submit', (event) => {
     const formData = {};
 
     for (const child of signUpForm.querySelectorAll('.signUpFields')) {
-        formData[child.id] = child.value;
+        // formData[child.id] = child.value;
+        sessionStorage.setItem(child.id, child.value)
     }
 
-    fetch(localhost_addr + '/users/signUp', {
-        method: 'POST',
-        headers: {
-        	'Accept': 'application/json',
-        	'Content-Type': 'application/json'
-    	},
-        body: JSON.stringify(formData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('New User Info', data)
-        })
-        .catch((error) => {
-            console.error('Error:', error)
-        })
+    window.location.replace("../../registration/registration.html");
+
+    // fetch(localhost_addr + '/users/signUp', {
+    //     method: 'POST',
+    //     headers: {
+    //     	'Accept': 'application/json',
+    //     	'Content-Type': 'application/json'
+    // 	},
+    //     body: JSON.stringify(formData)
+    // })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log('New User Info', data);
+    //         if(response.status === 403) {
+    //             document.getElementById('errorMessage').innerHTML = data.msg;
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         console.error('Error:', error);
+    //     })
 });
 
 signInForm.addEventListener('submit', (event) => {
