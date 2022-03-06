@@ -23,9 +23,7 @@ registerForm.addEventListener('submit', (event) => {
     formData.email = email;
     formData.password = password;
 
-    formData.gender = "male";
-    
-    console.log(formData);
+    console.log(formData); // TODO: Remove
 
     fetch(localhost_addr + '/users/register', {
         method: 'POST',

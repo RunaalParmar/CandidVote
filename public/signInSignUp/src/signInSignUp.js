@@ -22,7 +22,7 @@ signUpForm.addEventListener('submit', (event) => {
     const formData = {};
 
     for (const child of signUpForm.querySelectorAll('.signUpFields')) {
-        // formData[child.id] = child.value;
+        // TODO: Check if email already exists in database.
         sessionStorage.setItem(child.id, child.value)
     }
 

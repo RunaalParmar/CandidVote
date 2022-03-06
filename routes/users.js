@@ -55,10 +55,10 @@ router.delete("/deleteUser/:id", async (req, res) => {
 router.post("/createUser", async (req, res) => {
   const post = new User({
     firstname:req.body.firstname,
-    surname:req.body.surname,
-    DOB:req.body.DOB,
+    lastname:req.body.lastname,
+    dateOfBirth:req.body.dateOfBirth,
     address:req.body.address,
-    zip:req.body.zip,
+    zipCode:req.body.zipCode,
     gender:req.body.gender,
     phoneNumber:req.body.phoneNumber
   });
@@ -94,12 +94,13 @@ router.post('/register', (req, res, next) => {
                 email: req.body.email,
                 username: req.body.username,
                 orgName: req.body.orgName,
-                hash, // TODO
-                salt, // TODO
+                hash,
+                salt,
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
                 dateOfBirth: req.body.dateOfBirth,
                 address: req.body.address,
+                province: req.body.province,
                 zipCode: req.body.zipCode,
                 gender: req.body.gender,
                 phoneNumber: req.body.phoneNumber,

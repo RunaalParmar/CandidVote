@@ -48,13 +48,16 @@ const userModel = new mongoose.Schema({ // Changed from userSchema.
         type: String,
         required:true,
     },
+    province: {
+        type: String,
+        required:true,
+    },
     zipCode: {
         type: String,
         required: true,
     },
     gender: {
         type: String,
-        required: true,
     },
     phoneNumber:{
         type: Number,
