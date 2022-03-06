@@ -72,7 +72,7 @@ router.post('/signIn', passport.authenticate('local', {
 })); // TODO: change redirects.
 
 
-router.post('/signUp', (req, res, next) => {
+router.post('/register', (req, res, next) => {
     const saltHash = genPassword(req.body.password);
 
     const salt = saltHash.salt;
@@ -90,12 +90,19 @@ router.post('/signUp', (req, res, next) => {
             // Create new user.
             const newUser = new User({
                 uid,
+                authLevel: req.body.authLevel,
                 email: req.body.email,
-                orgName: req.body.orgName,
                 username: req.body.username,
+                orgName: req.body.orgName,
                 hash, // TODO
                 salt, // TODO
-                // authLevel: "admin"
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
+                dateOfBirth: req.body.dateOfBirth,
+                address: req.body.address,
+                zipCode: req.body.zipCode,
+                gender: req.body.gender,
+                phoneNumber: req.body.phoneNumber,
             });
 
             newUser.save()
@@ -105,6 +112,6 @@ router.post('/signUp', (req, res, next) => {
                 });
         }
     })
-}, passport.authenticate('local', {failureRedirect: 'login-failure', successRedirect: '/registration/registration.html'}));
+}, passport.authenticate('local', {failureRedirect: 'login-failure', successRedirect: 'register-success'}));
 
 module.exports = router;

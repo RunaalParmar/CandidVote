@@ -40,7 +40,7 @@ const userModel = new mongoose.Schema({ // Changed from userSchema.
         type: String,
         required: true,
     },
-    DOB: {
+    dateOfBirth: {
         type: Date,
         required:true,
     },
@@ -48,7 +48,7 @@ const userModel = new mongoose.Schema({ // Changed from userSchema.
         type: String,
         required:true,
     },
-    zip: {
+    zipCode: {
         type: String,
         required: true,
     },
