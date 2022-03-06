@@ -1,7 +1,7 @@
-const mongoose = require("mongoose")
-const createServer = require("../servers/user_server")
-const Post = require("../models/users") //
+const mongoose = require("mongoose");
 const supertest = require("supertest");
+const createServer = require("../servers/user_server");
+const {User} = require("../models/users");
 
 const app = createServer()
 beforeEach((done) => {
@@ -13,7 +13,7 @@ beforeEach((done) => {
 })
 
 test("To test: GET /getUsers", async () => {
-	const post = await Post.create({
+	const post = await User.create({
 		firstname:"Sriram",
         surname:"Sivaraman",
         DOB:'1998-05-14',
@@ -45,7 +45,7 @@ test("To test: GET /getUsers", async () => {
 })
 
 test("GET /api/getUsers/:id", async () => {
-	const post = await Post.create({
+	const post = await User.create({
 		firstname:"Sriram",
         surname:"Sivaraman",
         DOB:'1998-05-14',
@@ -70,7 +70,7 @@ test("GET /api/getUsers/:id", async () => {
 		})
 })
 test("DELETE /api/deleteUser/:id", async () => {
-	const post = await Post.create({
+	const post = await User.create({
 		firstname:"Sriram",
         surname:"Sivaraman",
         DOB:'1998-05-14',
@@ -84,7 +84,7 @@ test("DELETE /api/deleteUser/:id", async () => {
 		.delete("/api/deleteUser/" + post.id)
 		.expect(204)
 		.then(async () => {
-			expect(await Post.findOne({ _id: post.id })).toBeFalsy()
+			expect(await User.findOne({ _id: post.id })).toBeFalsy()
 		})
 })
 test("POST /api/createUser", async () => {
@@ -105,7 +105,7 @@ test("POST /api/createUser", async () => {
 		.then(async (response) => {
 		
             // Check if the data is in the database
-			const post = await Post.findOne({ _id: response.body._id })
+			const post = await User.findOne({ _id: response.body._id })
 			expect(post).toBeTruthy()
             expect(post.firstname).toBe(data.firstname)
 			expect(post.surname).toBe(data.surname)

@@ -1,25 +1,58 @@
-//basic schema definition for a collection in the database
+// Basic schema definition for the users collection in the database.
 
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({ // this is the schema object where we kind of define all the attributes and their propreties
+// Schema object to define all attributes and related propreties.
+const userModel = new mongoose.Schema({ // Changed from userSchema.
+    uid: {
+        type: String,
+        required: true,
+    },
+    authLevel: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    orgName: {
+        type: String,
+        required: true,
+    },
+    hash: {
+        type: String,
+        required: true,
+    },
+    salt: {
+        type: String,
+        required: true,
+    },
     firstname: {
         type: String,
         required: true,
     },
-    surname: {
+    lastname: {
         type: String,
         required: true,
     },
-    DOB: {
+    dateOfBirth: {
         type: Date,
         required:true,
     },
     address: {
         type: String,
-        
+        required:true,
     },
-    zip: {
+    province: {
+        type: String,
+        required:true,
+    },
+    zipCode: {
         type: String,
         required: true,
     },
@@ -33,7 +66,11 @@ const userSchema = new mongoose.Schema({ // this is the schema object where we k
     }
 });
 
-//This is the model that connects the collection and the schema. If we have not already created the collection, this will create one for you.
-const userModel = mongoose.model("users" , userSchema)
+// This model connects the collection and the schema.
+// If the collection has not yet been created, this will create one.
+module.exports = {
+    User: mongoose.model('users', userModel)
+};
 
-module.exports = userModel;
+// const userModel = mongoose.model("users" , userSchema);
+// module.exports = userModel;
