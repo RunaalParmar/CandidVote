@@ -58,6 +58,7 @@ const userModel = new mongoose.Schema({ // Changed from userSchema.
     },
     gender: {
         type: String,
+        required: true,
     },
     phoneNumber:{
         type: Number,

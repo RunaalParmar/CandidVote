@@ -7,6 +7,9 @@ const localhost_addr = 'http://localhost:5000';
 registerForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
+    const rawFormData = new FormData(registerForm);
+    const formDataAdditional = Object.fromEntries(rawFormData);
+
     const formData = {};
 
     for (const child of registerForm.querySelectorAll('.registerField')) {
@@ -22,6 +25,8 @@ registerForm.addEventListener('submit', (event) => {
     formData.username = username;
     formData.email = email;
     formData.password = password;
+
+    formData.gender = formDataAdditional.gender;
 
     console.log(formData); // TODO: Remove
 
