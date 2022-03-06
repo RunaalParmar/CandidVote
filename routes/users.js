@@ -67,7 +67,7 @@ router.post("/createUser", async (req, res) => {
 });
 
 router.post('/signIn', passport.authenticate('local', {
-    failureRedirect: '/login-failure',
+    // failureRedirect: '/login-failure',
     successRedirect: '/login-success',
 })); // TODO: change redirects.
 
@@ -113,6 +113,6 @@ router.post('/register', (req, res, next) => {
                 });
         }
     })
-}, passport.authenticate('local', {failureRedirect: 'login-failure', successRedirect: 'register-success'}));
+}, passport.authenticate('local', {failureRedirect: 'register-failure', successRedirect: 'register-success'}));
 
 module.exports = router;

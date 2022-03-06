@@ -22,9 +22,10 @@ signUpForm.addEventListener('submit', (event) => {
     const formData = {};
 
     for (const child of signUpForm.querySelectorAll('.signUpFields')) {
-        // TODO: Check if email already exists in database.
         sessionStorage.setItem(child.id, child.value)
     }
+
+    // TODO: Check if email already exists in database.
 
     window.location.replace("../../registration/registration.html");
 
@@ -64,7 +65,14 @@ signInForm.addEventListener('submit', (event) => {
     	},
         body: JSON.stringify(formData)
     })
-        .then(response => response.json())
+        .then(response => {
+            if(response.status === 401) {
+                let errMsg = document.getElementById("errorMessageSignIn");
+                errMsg.style.display = "block";
+            }
+            console.log(response)
+            return response.json()
+        })
         .then(data => {
             console.log('New User Info', data)
         })
