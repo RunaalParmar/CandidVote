@@ -1,7 +1,136 @@
 (function(){
-  // const addCandidateButton = document.
+   const candidateForm = document.getElementById('candidateForm')
+   const addCandidateButton = document.getElementById('createCandidateButton');
+   const candidateName = document.getElementById('candidateName');
+   const candidateEmail = document.getElementById('candidateEmail');
+   const candidateParty =document.getElementById('candidateParty');
+   const candidateDescripttion = document.getElementById('candidateDescripttion');
+   const candidates = document.getElementById('candidates')
+   
+   
+   
+   function addCandidate(){
+      let name = document.createElement('div');
+      name.classList.add('main_div')
+      
+      let holderOne = document.createElement('div')
+      holderOne.classList.add('holder')
+      
+      
+      let lableOne = document.createElement('span')
+      lableOne.innerHTML = 'Full Name'
+      lableOne.classList.add('on_touch')
+      
   
+      let inputBox1 = document.createElement('input')
+      inputBox1.setAttribute("type", "text");
+      inputBox1.value = candidateName.value
+      inputBox1.disabled = true;
+      inputBox1.classList.add('eventField')
+      inputBox1.classList.add('box')
+      
+      holderOne.appendChild(lableOne)
+      holderOne.appendChild(inputBox1)
+      
+      
+      
+      // let labelNode = document.createTextNode("Full name");
+      // let textNode =  document.createElement('span')
+      
+      let holderTwo = document.createElement('div')
+      holderTwo.style.width = 'calc(100% / 2 - 20px)'
+      
+      let lableTwo = document.createElement('span')
+      lableTwo.innerHTML = 'Email'
+      lableTwo.classList.add('on_touch')
+      
   
+      let inputBox2 = document.createElement('input')
+      inputBox2.setAttribute("type", "email");
+      inputBox2.value = candidateEmail.value
+      inputBox2.disabled = true;
+      inputBox2.classList.add('eventField')
+      inputBox2.classList.add('box')
+      
+      holderTwo.appendChild(lableTwo)
+      holderTwo.appendChild(inputBox2)
+      
+      
+      // textNode.appendChild(inputBox1) 
+      
+
+      
+      // textNode.style.marginLeft = '1rem'      
+      
+      
+      let holderThree = document.createElement('div')
+      holderThree.style.width = 'calc(100% / 2 - 20px)'
+      
+      let lableThree = document.createElement('span')
+      lableThree.innerHTML = 'Affilation'
+      lableThree.classList.add('on_touch')
+      
+  
+      let inputBox3 = document.createElement('input')
+      inputBox3.setAttribute("type", "text");
+      inputBox3.value = candidateParty.value
+      inputBox3.disabled = true;
+      inputBox3.classList.add('eventField')
+      inputBox3.classList.add('box')
+      
+      holderThree.appendChild(lableThree)
+      holderThree.appendChild(inputBox3)
+      
+      
+      
+      
+      
+      // name.appendChild(labelNode)
+      let holderFour = document.createElement('div')
+      holderFour.style.width = 'calc(100% / 2 - 20px)'
+      
+      let lableFour = document.createElement('span')
+      lableFour.innerHTML = 'Candidate Manifesto'
+      lableThree.classList.add('on_touch')
+      
+  
+      let inputBox4 = document.createElement('textarea')
+      inputBox4.value = candidateDescripttion.value
+      inputBox4.disabled = true;
+      inputBox4.classList.add('eventField')
+      inputBox4.classList.add('box1')
+      
+      holderFour.appendChild(lableFour)
+      holderFour.appendChild(inputBox4)
+      /* *********************** */
+      
+      name.appendChild(holderOne)
+      name.appendChild(holderTwo)
+      name.appendChild(holderThree)
+      name.appendChild(holderFour)
+      
+      
+      
+      
+      
+      return name
+      
+      
+      
+      
+    
+   }
+   
+   
+   
+   candidateForm.addEventListener('submit' , (event) =>{
+     event.preventDefault()
+     candidates.style.marginTop = '2rem'
+     candidates.appendChild(addCandidate())
+     document.getElementById('add').checked = false;
+   })
+   
+     
   
   
   
