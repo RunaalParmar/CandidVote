@@ -16,56 +16,99 @@
   <body>
     <div class="container">
       <div class="title">Create Event</div>
-      <form action="#">
+      <form action="#" id ="eventForm">
         <div class="event-details">
+          
             <div class="input-box">
               <span class="details">Event Name</span>
-              <input type="text" placeholder="eg John" required>
+              <input type="text" placeholder="eg John" id="eventName" class ="eventField" required>
            </div>  
            
            <div class="input-box">
               <span class="details">Voters Tag</span>
-              <input type="text" placeholder="eg John" required>
+              <input type="text" placeholder="eg John" id="votersTag" class ="eventField" required>
+           </div> 
+           
+           <div class="input-box">
+            <span class="details">Start Date</span>
+            <input type="date" placeholder="DD/MM/YYYY" id="startDate" class ="eventField" required>
            </div>  
+           
+           
+           <div class="input-box">
+            <span class="details">End Date</span>
+            <input type="date" placeholder="DD/MM/YYYY" id="endDate" class ="eventField" required>
+           </div>  
+           
+           
+            <div class="input-box">
+            <span class="details">Description</span>
+            <textarea id="eventDescripttion" name="" rows="4" cols="50" class ="eventField" required >
+             
+              </textarea>
+           </div>  
+           
+           
          </div>
+         
+
         
-         <div class="candidate-details">
         
-          
+
+        
+        
+         <div class="candidate-details">  
           <span class="user">click icon to add candidates</span>
           <label for="add" class=" icon fas fa-user-plus"></label>
-         
         </div> 
 
         
-          
-          
-         
+        <div id="candidates"></div>
+        
+        
+        
+        
+        
        <div class="button">
-          <input type="submit" value="Create">
+          <input type="submit" id="createEventButton" value="Create">
       </div>
     </form>
+    
+    
     <input type="checkbox" name="" id="add">
     <div class="candidate_sec">
       <div class="relative">
               <div class="main">
+                
                  <label for="add"  class="close-btn fas fa-times" title="close" ></label>
                  <h1 class="text">Add Candidate</h1>
-                   <form action="#">
+                   <form action="#" id ="candidateForm">
                                <div class="data">
-                                 <label >Candidate</label>
-                                 <input type="text" name="" id="" placeholder="Enter Candidates Name" required>
+                                 <label >Full Name</label>
+                                 <input type="text" name="" id="candidateName" placeholder="Enter Candidates Name" class ="candidateField" required>
                                 </div> 
                                 <div class="data">
                                  <label >Email</label>
-                                 <input type="email" name="" id="" placeholder="Enter Candidates Email" required>
+                                 <input type="email" name="" id="candidateEmail" placeholder="Enter Candidates Email" class ="candidateField" required>
                                  </div>
                                  
+                                 <div class="data">
+                                  <label >Affiliation</label>
+                                  <input type="text" name="" id="candidateParty" placeholder="Enter Candidates Party" class ="candidateField" required>
+                                  </div>
+                                 <div class="data">
+                                  <label >Description</label>
+                                  <textarea id="candidateDescripttion" name="" rows="3" cols="40"  class ="candidateField" required>
+                                    </textarea>
+                                 </div>  
+                                 
                                  <div class="btn">
-                                     <button type="submit">Add</button>
+                                     <button type="submit" id="createEventButton" >Add</button>
                                  </div>
+                                 
                    </form>
-                </div> 
+                 
+              </div>
           
       </div>
 
@@ -76,6 +119,6 @@
         
   </div>
     
-    <!-- <script src="" async defer></script> -->
+    <script type="module" src="create_event.js" async defer></script>
   </body>
 </html>
