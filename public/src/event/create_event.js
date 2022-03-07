@@ -1,13 +1,13 @@
 (function(){
    const candidateForm = document.getElementById('candidateForm')
-   const addCandidateButton = document.getElementById('createCandidateButton');
    const candidateName = document.getElementById('candidateName');
    const candidateEmail = document.getElementById('candidateEmail');
    const candidateParty =document.getElementById('candidateParty');
    const candidateDescripttion = document.getElementById('candidateDescripttion');
    const candidates = document.getElementById('candidates')
+   const eventForm = document.getElementById('eventForm')
    
-   
+   const local_addr = 'http://localhost:5000'
    
    function addCandidate(){
       let name = document.createElement('div');
@@ -123,13 +123,44 @@
    
    
    
-   candidateForm.addEventListener('submit' , (event) =>{
+     candidateForm.addEventListener('submit' , (event) =>{
      event.preventDefault()
      candidates.style.marginTop = '2rem'
      candidates.appendChild(addCandidate())
      document.getElementById('add').checked = false;
    })
    
+    const formData = {}
+    
+    for(const child of eventForm.querySelectorAll('.eventField'))
+    {
+      formData[child.id] = child.value;
+    }
+    
+    eventForm.addEventListener('submit' , (event) => {
+      
+      event.preventDefault();
+      
+      fetch(local_addr + '/user/event' ,{
+        
+        method:'POST',
+        headers:{
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body:JSON.stringify(formData)
+        
+      }).then(response => {
+        response.json()
+      }).then(data => {
+        console.log(data)
+        candidates,innerHTML ="";
+      }).catch((error) => {
+        console.error('Error' , error)
+      })
+      
+      
+    })
      
   
   
