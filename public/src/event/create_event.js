@@ -34,11 +34,10 @@
       
       
       
-      // let labelNode = document.createTextNode("Full name");
-      // let textNode =  document.createElement('span')
+
       
       let holderTwo = document.createElement('div')
-      holderTwo.style.width = 'calc(100% / 2 - 20px)'
+      holderTwo.classList.add('holder')
       
       let lableTwo = document.createElement('span')
       lableTwo.innerHTML = 'Email'
@@ -56,15 +55,10 @@
       holderTwo.appendChild(inputBox2)
       
       
-      // textNode.appendChild(inputBox1) 
-      
 
       
-      // textNode.style.marginLeft = '1rem'      
-      
-      
       let holderThree = document.createElement('div')
-      holderThree.style.width = 'calc(100% / 2 - 20px)'
+      holderThree.classList.add('holder')
       
       let lableThree = document.createElement('span')
       lableThree.innerHTML = 'Affilation'
@@ -84,10 +78,9 @@
       
       
       
-      
-      // name.appendChild(labelNode)
+     
       let holderFour = document.createElement('div')
-      holderFour.style.width = 'calc(100% / 2 - 20px)'
+      holderFour.classList.add('holder')
       
       let lableFour = document.createElement('span')
       lableFour.innerHTML = 'Candidate Manifesto'
@@ -102,7 +95,8 @@
       
       holderFour.appendChild(lableFour)
       holderFour.appendChild(inputBox4)
-      /* *********************** */
+
+      
       
       name.appendChild(holderOne)
       name.appendChild(holderTwo)
