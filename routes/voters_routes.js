@@ -1,6 +1,7 @@
 
 //const { restart } = require('nodemon');
 const shortid = require('short-id')
+var converter = require('hex2dec');
 function routes(app, dbe , accounts, lme){
 
     app.get('/' ,(req , res) =>{
@@ -22,25 +23,44 @@ function routes(app, dbe , accounts, lme){
 
     })
 
-    app.get('/getData' , async(req,res)=>{
+    app.get('/getData/:event' , async(req,res)=>{
          
-        
+        const prms = req.params;
+        const event = prms.event;
+        //const event = 1234
+        console.log(event);
+        votes_dict = {};
         //get data from the blockchain
         let cache = [];
         const ctr = await lme.voteCount()
         console.log("vote counts: "+ ctr.toNumber())
-        const ctr1 = ctr.toNumber()
-        //res.send("<h1>hi - getData</h1>")  
+        const ctr1 = ctr.toNumber()  
 
-            for (let i = 1; i <= ctr1; i++) {
-                const votes = await lme.tasks(i)
-                console.log("#########the votes are ###########")
-                console.log(votes)
-                console.log("####################################")
-                 cache = [...cache, votes];
+        for (let i = 1; i <= ctr1; i++) {
+            const votes = await lme.tasks(i)
+            console.log("#########the votes are ###########")
+            const votes_temp = JSON.stringify(votes)
+            const votes_json = JSON.parse(votes_temp)
+            // console.log(votes_json)
+            // console.log(typeof(votes_json.eventId))
+            var dec_eventId = converter.hexToDec(votes_json.eventId);
+            var votes_event = converter.hexToDec(votes_json.vote);
+            var num = Number(votes_event)
+            if(event == dec_eventId){
+                if(votes_event in votes_dict){
+                    console.log("111")
+                    votes_dict[num] += 1;
+                }
+                else{
+                    console.log("121")
+                    votes_dict[num] = 1
+                }
             }
-        // const votes = await lme.tasks(1)
-        console.log("votes : "+  JSON.stringify(cache))
+            console.log("####################################")
+            cache = [...cache, votes];
+        }
+        console.log(votes_dict)
+        
         
         res.json(cache);
   });
