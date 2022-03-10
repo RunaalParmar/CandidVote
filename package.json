@@ -32,7 +32,14 @@
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "uuid": "^8.3.2",
-    "supertest": "^6.2.2"
+    "supertest": "^6.2.2",
+    "@truffle/contract": "^4.4.11",
+    "dotenv": "^16.0.0",
+    "ganache-cli": "^6.12.2",
+    "short-id": "^0.1.0-1",
+    "shortid": "^2.2.16",
+    "web3": "^1.6.1"
+
   },
   "devDependencies": {
     "jest": "^27.5.1",
