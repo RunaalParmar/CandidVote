@@ -2,7 +2,7 @@
 *{
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: inherit;
   font-family: 'Poppins' , sans-serif;
   
 }
@@ -16,6 +16,7 @@ body{
   align-items: center;
   background: linear-gradient( 90deg, rgb(160, 222, 219), rgb(3, 165, 209));
   padding: 1rem;
+  box-sizing: border-box;
   position: relative;
 }
 
@@ -141,7 +142,7 @@ form .button input {
 
 .container  .candidate_sec{
   background:rgba(0,0 ,0, 0.50);
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   position: absolute;
   top: 0;
@@ -170,7 +171,7 @@ form .button input {
   box-shadow: 0rem 0rem 1rem rgba(0, 0, 0, 0.1); 
   max-width:50rem;
   width: 100%;
-  box-shadow: 0 .5rem 2rem #000;
+  box-shadow: 0.5rem 1rem 2rem rgba(0,0,0,0.2);
   transition: all .2s ease;
 }  
 .main .close-btn{
@@ -306,4 +307,30 @@ justify-content: space-between;
   transition: all 1s ease-out;
   resize: none;
   
+}
+
+@media(max-width: 548px) {
+  html {
+      font-size: 57%;
+  }
+  .container {
+      max-width: 100%;
+      margin: auto;
+  }
+  .container form .event-details .input-box {
+      width: 100%;
+      margin-bottom: 1.5rem;
+  }
+  .main_div{
+    width: 100%;
+  }
+  .holder {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  .candidate_sec .relative .main{
+    max-width: 35rem;
+    width: 100%;
+
+  }  
 }
