@@ -2,10 +2,15 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const routes = require('./routes/voters_routes')
+const Web3 = require('web3');
 const passport = require('passport');
-const {MongoClient} = require('mongodb');
+const mongodb = require('mongodb').MongoClient
+//const {MongoClient} = require('mongodb');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const artifacts = require('./build/contracts/Vote.json');
+const contract = require('@truffle/contract');
 const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
 
@@ -16,21 +21,21 @@ const localhost_addr = "http://localhost:";
 const mongoURL = "mongodb+srv://r3parmar:CandidVoTePWD@candidvote.wxjmp.mongodb.net/CandidVoTeDB?retryWrites=true&w=majority";
 
 // CONNECT TO DATABASE
-async function connectToDB() {
-    try {
-        await mongoose.connect(mongoURL);
-        console.log("Connected To DB"); 
-    } catch(e) {
-        console.log(e);
-    }  
-}
+// async function connectToDB() {
+//     try {
+//         await mongoose.connect(mongoURL);
+//         console.log("Connected To DB"); 
+//     } catch(e) {
+//         console.log(e);
+//     }  
+// }
 
-connectToDB();
+//connectToDB();
 
 // MIDDLEWARE
 app.options("*", cors({ origin: localhost_addr + port, optionsSuccessStatus: 200 }));
 app.use(cors({ origin: localhost_addr + port, optionsSuccessStatus: 200 }));
-
+app.use(express.json());
 app.use('/', express.static('public'));
 app.use(bodyParser.json());
 
@@ -52,7 +57,29 @@ auth.initPassport(app);
 const users = require('./routes/users');
 app.use('/users', users);
 
+/////changed code for blockchain //////////
+if (typeof web3 !== 'undefined') {
+    var web3 = new Web3(web3.currentProvider); 
+} else {
+    var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:7545'));
+    console.log("########### web3 object created ################")
+}
+const LMS = contract(artifacts)
+//console.log(LMS)
+LMS.setProvider(web3.currentProvider)
+mongodb.connect("mongodb://localhost:27017/sampleDatabase",{ useUnifiedTopology: true } , async (err ,client) =>{
+
+    const db =client.db('Cluster0')
+    const accounts = await web3.eth.getAccounts();
+    const lms = await LMS.deployed();
+    routes(app, db, accounts, lms);
+    app.listen(process.env.PORT || 3000, () => {
+        console.log('listening on port '+ (3000));
+        //console.log(accounts)
+     })
+
+})
 // SERVER LAUNCH
-app.listen(port, () => {
-  console.log(`CandidVoTe app listening on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`CandidVoTe app listening on port ${port}`);
+// });
