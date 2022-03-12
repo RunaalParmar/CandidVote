@@ -149,9 +149,11 @@ form .button input {
   left:0;
   display: none;
   z-index: 100;
+  object-fit: cover;
 }
 #add:checked ~ .candidate_sec{
   display: block;
+  
 }
 
  .candidate_sec .relative{
