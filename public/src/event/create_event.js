@@ -139,31 +139,27 @@
         }
         formData.candidates.push(candidate)
       }
-      // {
-      //   formData[child.id] = child.value;
-      // }
       
-        console.log(formData)
-      // fetch(local_addr + '/user/event' ,{
+      fetch(local_addr + '/user/event' ,{
         
-      //   method:'POST',
-      //   headers:{
-      //     "Accept": "application/json",
-      //     "Content-Type": "application/json"
-      //   },
-      //   body:JSON.stringify(formData)
+        method:'POST',
+        headers:{
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body:JSON.stringify(formData)
         
-      // }).then(response => {
+      }).then(response => {
         
         
-      //   response.json()
+        response.json()
         
-      // }).then(data => {
-      //   console.log(data)
-      //   candidates,innerHTML ="";
-      // }).catch((error) => {
-      //   console.error('Error' , error)
-      // })
+      }).then(data => {
+        console.log(data)
+        candidates,innerHTML ="";
+      }).catch((error) => {
+        console.error('Error' , error)
+      })
       
       
     })
