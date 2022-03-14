@@ -6,7 +6,7 @@
    const candidateDescripttion = document.getElementById('candidateDescripttion');
    const candidates = document.getElementById('candidates')
    const eventForm = document.getElementById('eventForm')
-   
+  //  let val  = 0;
    const local_addr = 'http://localhost:5000'
    
    function addCandidate(){
@@ -16,7 +16,7 @@
       delete_btn.innerHTML ="delete"
       delete_btn.setAttribute('id', 'delete_btn')
       delete_btn.setAttribute("type", "button")
-      delete_btn.setAttribute("onclick" , "this.parentElement.remove();")
+      delete_btn.setAttribute("onclick" , "this.parentElement.remove()")
       delete_btn.classList.add('delete_b')
       let holderOne = document.createElement('div')
       holderOne.classList.add('holder')
@@ -114,6 +114,7 @@
      candidateForm.addEventListener('submit' , (event) =>{
      event.preventDefault()
      candidates.style.marginTop = '2rem'
+     
      candidates.appendChild(addCandidate())
      document.getElementById('add').checked = false;
    })
