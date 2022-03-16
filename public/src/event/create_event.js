@@ -140,7 +140,7 @@
         }
         formData.candidates.push(candidate)
       }
-      
+      // console.log(formData)
       fetch(local_addr + '/user/event' ,{
         
         method:'POST',
