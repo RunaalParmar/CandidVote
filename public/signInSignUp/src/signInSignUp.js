@@ -25,28 +25,7 @@ signUpForm.addEventListener('submit', (event) => {
         sessionStorage.setItem(child.id, child.value)
     }
 
-    // TODO: Check if email already exists in database.
-
     window.location.replace("../../registration/registration.html");
-
-    // fetch(localhost_addr + '/users/signUp', {
-    //     method: 'POST',
-    //     headers: {
-    //     	'Accept': 'application/json',
-    //     	'Content-Type': 'application/json'
-    // 	},
-    //     body: JSON.stringify(formData)
-    // })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log('New User Info', data);
-    //         if(response.status === 403) {
-    //             document.getElementById('errorMessage').innerHTML = data.msg;
-    //         }
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error:', error);
-    //     })
 });
 
 signInForm.addEventListener('submit', (event) => {
@@ -74,7 +53,7 @@ signInForm.addEventListener('submit', (event) => {
             return response.json()
         })
         .then(data => {
-            console.log('New User Info', data)
+            console.log('User Info', data)
         })
         .catch((error) => {
             console.error('Error:', error)
