@@ -23,9 +23,10 @@ body{
 .row{
   max-width: 114rem;
   width: 100%;
-  display:flex;
+  /* display:flex; */
   align-items: center;
   flex-wrap: wrap;
+  display: none;
   
   
 }
@@ -292,6 +293,34 @@ body{
   animation: loader-inner 2s infinite ease;
 }
 
+.graphics__container{
+  height: 100vh;
+  width:100vw;
+  position: fixed;
+  left:0;
+  top:0;
+  background-color: rgba(0 , 0 , 0 , 0.9);
+  text-align: center; 
+   display: block;
+   z-index: 100;
+}
+.graphics{
+  width: 6rem;
+  height:6rem;
+  border: .5rem solid rgb(3, 165, 209);
+  position: relative;
+  top:50%;
+  display: inline-block;
+  animation: graphic 2s infinite ease;
+}
+.graphics__inner{
+  width :100%;
+  background-color:rgba(159, 150 , 225 , 0.3);
+  vertical-align: top;
+  display: inline-block;
+  animation: graphic-inner 2s infinite ease;
+}
+
 @keyframes loader {
   0%{
     transform: rotate(0deg);
@@ -328,6 +357,45 @@ body{
     height:0%;
   }
 }
+
+
+@keyframes graphic {
+  0%{
+    transform: rotate(0deg);
+  }
+  
+  25%{
+    transform: rotate(180deg);
+  }
+  50%{
+    transform: rotate(360deg);
+  }
+  75%{
+    transform: rotate(360deg);
+  }
+  100%{
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes graphic-inner {
+  0%{
+    height :0%;
+  }
+  25%{
+    height: 0%;
+  }
+  50%{
+    height:100%;
+  }
+  75%{
+    height:100%
+  }
+  100%{
+    height:0%;
+  }
+}
+
 
 @media(max-width: 548px){
   .col-1-3{

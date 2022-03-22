@@ -7,6 +7,8 @@
   const loader_container = document.getElementById('loader_container')
   const can_box = document.getElementById('can_box')
   const vote__message = document.getElementById('vote__message')
+  const graphics_containerID = document.getElementById('graphics_containerID')
+  const localhost_addr = 'http://localhost:5000';
   // const result = {
   //   eventName:"",
   //   candidate:""
@@ -14,54 +16,54 @@
   
   const results  = [];
   
-  const events = [
-         {
-           eid: '213413',
-           eventName : 'Provincial General Election Alberta',
-           startDate : 'March 1 2023',
-           endDate: 'May 31 2023',
-           mesg_id:'1'
-         },
-         {
-          eid: '102025',
-          eventName : 'Provincial General Election Ontario',
-          startDate : 'June 2, 2022',
-          endDate: 'June 2, 2022',
-          mesg_id:'2'
-        },
-        {
-          eid: '132134',
-          eventName : 'Provincial General Election BC',
-          startDate : 'October 15, 2022',
-          endDate: 'October 15, 2022',
-          mesg_id:'3'
-        }
-  ]
-  const candidatesArray = [
-          {
-            name : "Christopher",
-            descriptiion : "Canadian Nationalist Party",
-            id : "christopher@gmail.com"
-          },
+  // const events = [
+  //        {
+  //          eid: '213413',
+  //          eventName : 'Provincial General Election Alberta',
+  //          startDate : 'March 1 2023',
+  //          endDate: 'May 31 2023',
+  //          mesg_id:'1'
+  //        },
+  //        {
+  //         eid: '102025',
+  //         eventName : 'Provincial General Election Ontario',
+  //         startDate : 'June 2, 2022',
+  //         endDate: 'June 2, 2022',
+  //         mesg_id:'2'
+  //       },
+  //       {
+  //         eid: '132134',
+  //         eventName : 'Provincial General Election BC',
+  //         startDate : 'October 15, 2022',
+  //         endDate: 'October 15, 2022',
+  //         mesg_id:'3'
+  //       }
+  // ]
+  // const candidatesArray = [
+  //         {
+  //           name : "Christopher",
+  //           descriptiion : "Canadian Nationalist Party",
+  //           id : "christopher@gmail.com"
+  //         },
           
-          {
-            name : "Michael",
-            descriptiion : "Centrist Party of Canada",
-            id : "michael@gmail.com"
-          },
+  //         {
+  //           name : "Michael",
+  //           descriptiion : "Centrist Party of Canada",
+  //           id : "michael@gmail.com"
+  //         },
 
-          {
-            name : "Uche",
-            descriptiion : "Conservative Party of Canada",
-            id : "uche@gmail.com"
-          },
-          {
-            name : "Watson",
-            descriptiion : "Veterans Coalition  Canada",
-            id : "watson@gmail.com"
-          }
-  ]
-  // name_val , description_val , id
+  //         {
+  //           name : "Uche",
+  //           descriptiion : "Conservative Party of Canada",
+  //           id : "uche@gmail.com"
+  //         },
+  //         {
+  //           name : "Watson",
+  //           descriptiion : "Veterans Coalition  Canada",
+  //           id : "watson@gmail.com"
+  //         }
+  // ]
+  
   function addEvent(eid ,eventName, startDate , endDate,mesg_id){
     const name = document.createElement('div');
     const DateLabelOne = document.createElement('label')
@@ -145,16 +147,36 @@
   // event_container.appendChild(addEvent('Two','1020304050'))
   // event_container.appendChild(addEvent('Three', '11223344556677'))
   
-  function loadEvents(){
-        
-     for (const baby of events){
-        
-      let temp = addEvent(baby.eid ,baby.eventName, baby.startDate , baby.endDate,baby.mesg_id)
-      event_container.append(temp)
-     }
+  async function  loadEvents(){
+    const userID = {
+       ID : window.sessionStorage.getItem('userID')
+    }
+    await fetch(localhost_addr + '/user/load_event' ,{
+      method:'GET',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type' : 'application/json'
+      },
+      body:JSON.stringify(userID)
+    })
+       .then(response => {
+         return response.json()
+       })
+       .then(data => {
+        //  console.log(data)
+         for (const baby of data){
+            let temp = addEvent(baby.eid ,baby.eventName, baby.startDate , baby.endDate,baby.mesg_id)
+            event_container.append(temp)
+           }
+           graphics_containerID.style = 'display:none';
+           event_container.style = 'display: flex';
+
+       })
+    
+  
      
   }
-  loadEvents()
+  
   
   function addCandidate(name, description , id){
    const candidate_name = document.createElement('div');
@@ -206,6 +228,28 @@
       vote_display.style = "display: none";
       can_box.innerHTML ='';
       vote__message.innerHTML=""
+      
+      const voteDetails = {
+        event : window.sessionStorage.getItem('eventName'),
+        candidate: window.sessionStorage.getItem('vote')
+        
+      }
+      
+      fetch(localhost_addr + '/user/save_vote' ,{
+        method:'POST',
+        headers:{
+          'Accept':'application/json',
+          'Content-Type' : 'application/json'
+        },
+        body:JSON.stringify(voteDetails)
+      })
+         .then(response => {
+           return response.json()
+         })
+         .then(data => {
+           console.log(data)
+         })
+
       // console.log('results');
       // results.push(window.sessionStorage.getItem('vote'))
       // window.sessionStorage.clear();
@@ -215,16 +259,35 @@
   
 }
 
-function loadCandidates(){
-      for (const child of candidatesArray){
-        
-      let temp = addCandidate(child.name ,child.descriptiion, child.id)
-      can_box.append(temp)
-     }
-     loader_container.style = 'display : none';
-     vote_display.style ='display : block'
-     
-     
+async function loadCandidates(){
+   const eventDetails = {
+    ID : window.sessionStorage.getItem('userID'),
+    EID : window.sessionStorage.getItem('eid')
+   }
+   await fetch(localhost_addr + '/user/load_candidates' ,{
+    method:'GET',
+    headers:{
+      'Accept':'application/json',
+      'Content-Type' : 'application/json'
+    },
+    body:JSON.stringify(eventDetails)
+  })
+     .then(response => {
+       return response.json()
+     })
+     .then(data => {
+         console.log(data)
+        for (const child of candidatesArray){
+          
+        let temp = addCandidate(child.name ,child.descriptiion, child.id)
+        can_box.append(temp)
+       }
+      loader_container.style = 'display : none';
+      vote_display.style ='display : block'
+
+     })
+
+    
 }
 
 
@@ -241,6 +304,23 @@ function onVisible(element, callback) {
 }
 
 onVisible(loader_container, loadCandidates);
+
+
+function onMonitor(element, callback) {
+  new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.intersectionRatio > 0) {
+        callback(element);
+        observer.disconnect();
+      }
+    });
+  }).observe(element);
+}
+ 
+onMonitor(graphics_containerID, loadEvents)
+
+
+
 
 
 
