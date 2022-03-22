@@ -74,7 +74,7 @@ signInForm.addEventListener('submit', (event) => {
             return response.json()
         })
         .then(data => {
-            console.log('New User Info', data)
+            console.log('User Info', data)
         })
         .catch((error) => {
             console.error('Error:', error)

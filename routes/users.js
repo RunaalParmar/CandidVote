@@ -66,11 +66,15 @@ router.post("/createUser", async (req, res) => {
   res.send(post);
 });
 
-router.post('/signIn', passport.authenticate('local', {
-    // failureRedirect: '/login-failure',
-    successRedirect: '/login-success',
-})); // TODO: change redirects.
-
+router.post('/signIn', passport.authenticate('local'), (req, res)=>{
+  if(req.user) {
+    if(req.user.authLevel == "admin" || req.user.authLevel == "superAdmin") {
+      res.redirect('/admin-dash');
+    } else {
+      res.redirect('/voter-dash');
+    }
+  }
+});
 
 router.post('/register', (req, res, next) => {
     const saltHash = genPassword(req.body.password);
@@ -113,6 +117,16 @@ router.post('/register', (req, res, next) => {
                 });
         }
     })
-}, passport.authenticate('local', {failureRedirect: 'register-failure', successRedirect: 'register-success'}));
+}, passport.authenticate('local', {
+    failureRedirect: '/login-failure'
+}), (req, res)=>{
+    if(req.user) {
+      if(req.user.authLevel == "admin") {
+        res.redirect('/admin-dash');
+      } else {
+        res.redirect('/voter-dash');
+      }
+    }
+});
 
 module.exports = router;
