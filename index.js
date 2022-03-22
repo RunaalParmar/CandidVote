@@ -1,4 +1,3 @@
-
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -67,12 +66,13 @@ if (typeof web3 !== 'undefined') {
 const LMS = contract(artifacts)
 //console.log(LMS)
 LMS.setProvider(web3.currentProvider)
-mongodb.connect("mongodb://localhost:27017/sampleDatabase",{ useUnifiedTopology: true } , async (err ,client) =>{
+// mongodb.connect("mongodb://localhost:27017/sampleDatabase",{ useUnifiedTopology: true } , async (err ,client) =>{
+mongodb.connect(mongoURL,{ useUnifiedTopology: true } , async (err ,client) =>{
 
     const db =client.db('Cluster0')
-    const accounts = await web3.eth.getAccounts();
-    const lms = await LMS.deployed();
-    routes(app, db, accounts, lms);
+   // const accounts = await web3.eth.getAccounts();
+   // const lms = await LMS.deployed();
+   // routes(app, db, accounts, lms);
     app.listen(process.env.PORT || 3000, () => {
         console.log('listening on port '+ (3000));
         //console.log(accounts)
