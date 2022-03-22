@@ -12,45 +12,15 @@ const candidateModel = new mongoose.Schema({
         type: String,
         required: true,
     },
-    username: {
+    fullName: {
         type: String,
         required: true,
     },
-    orgName: {
+    affiliation: {
         type: String,
-        required: true,
     },
-    firstname: {
+    description: {
         type: String,
-        required: true,
-    },
-    lastname: {
-        type: String,
-        required: true,
-    },
-    dateOfBirth: {
-        type: Date,
-        required:true,
-    },
-    address: {
-        type: String,
-        required:true,
-    },
-    province: {
-        type: String,
-        required:true,
-    },
-    zipCode: {
-        type: String,
-        required: true,
-    },
-    gender: {
-        type: String,
-        required: true,
-    },
-    phoneNumber:{
-        type: Number,
-        required: true,
     }
 });
 
