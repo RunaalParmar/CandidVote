@@ -69,7 +69,7 @@ router.post("/createUser", async (req, res) => {
 router.post('/signIn', passport.authenticate('local'), (req, res)=>{
   if(req.user) {
     if(req.user.authLevel == "admin" || req.user.authLevel == "superAdmin") {
-      res.redirect('/admin-dash');
+      res.redirect('/adminDashboard/dashboard_admin.html');
     } else {
       res.redirect('/voter-dash');
     }
@@ -77,46 +77,44 @@ router.post('/signIn', passport.authenticate('local'), (req, res)=>{
 });
 
 router.post('/register', (req, res, next) => {
-    const saltHash = genPassword(req.body.password);
+  const saltHash = genPassword(req.body.password);
 
-    const salt = saltHash.salt;
-    const hash = saltHash.hash;
+  const salt = saltHash.salt;
+  const hash = saltHash.hash;
 
-    const uid = uuidv4();
+  const uid = uuidv4();
 
-    // Check if email already registered.
-    User.findOne({email: req.body.email}).then((user) => {
-        if (user) {
-            // Email exists.
-            res.status(403).send({msg:"Email already exists!"});
-        
-        } else {
-            // Create new user.
-            const newUser = new User({
-                uid,
-                authLevel: req.body.authLevel,
-                email: req.body.email,
-                username: req.body.username,
-                orgName: req.body.orgName,
-                hash,
-                salt,
-                firstname: req.body.firstname,
-                lastname: req.body.lastname,
-                dateOfBirth: req.body.dateOfBirth,
-                address: req.body.address,
-                province: req.body.province,
-                zipCode: req.body.zipCode,
-                gender: req.body.gender,
-                phoneNumber: req.body.phoneNumber,
-            });
+  // Check if email already registered.
+  User.findOne({email: req.body.email}).then((user) => {
+    if (user) {
+      res.status(403).send({msg:"Email already exists!"}); // Email exists
+    } else {
+      // Create new user.
+      const newUser = new User({
+        uid,
+        authLevel: req.body.authLevel,
+        email: req.body.email,
+        username: req.body.username,
+        orgName: req.body.orgName,
+        hash,
+        salt,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        dateOfBirth: req.body.dateOfBirth,
+        address: req.body.address,
+        province: req.body.province,
+        zipCode: req.body.zipCode,
+        gender: req.body.gender,
+        phoneNumber: req.body.phoneNumber,
+      });
 
-            newUser.save()
-                .then((user) => {
-                    console.log(user);
-                    next();
-                });
-        }
-    })
+      newUser.save()
+        .then((user) => {
+          console.log(user);
+          next();
+      });
+    }
+  })
 }, passport.authenticate('local', {
     failureRedirect: '/login-failure'
 }), (req, res)=>{
