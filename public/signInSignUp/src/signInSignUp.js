@@ -48,7 +48,10 @@ signInForm.addEventListener('submit', (event) => {
             if(response.status === 401) {
                 let errMsg = document.getElementById("errorMessageSignIn");
                 errMsg.style.display = "block";
-            }
+            } else if(response.status === 200) {
+                sessionStorage.setItem("email", signInEmail);
+                window.location.replace(response.url);
+            } 
             console.log(response)
             return response.json()
         })

@@ -120,7 +120,8 @@ router.post('/register', (req, res, next) => {
 }), (req, res)=>{
     if(req.user) {
       if(req.user.authLevel == "admin") {
-        res.redirect('/admin-dash');
+        res.redirect('/adminDashboard/dashboard_admin.html');
+        // res.send({"user": req.user});
       } else {
         res.redirect('/voter-dash');
       }
