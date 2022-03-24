@@ -14,16 +14,16 @@ router.post('/saveEvent', (req, res, next) => {
   console.log(req.body); // TODO: this is for testing, remove later.
 
   // Extract the candidates data from the received event object.
-  for(const candidate of req.candidates) {
+  for(const candidate of req.body.candidates) {
     const cid = "1111"; // TODO
 
     // Create new candidate item.
     const newCandidate = new Candidate({
       cid,
-      email: newCandidate.email,
-      fullName: newCandidate.fullName,
-      affiliation: newCandidate.affiliation,
-      platform: newCandidate.platform,
+      email: candidate.Email,
+      fullName: candidate.Name,
+      affiliation: candidate.Affiliation,
+      platform: candidate.Platform,
     });
 
     newCandidate.save(); // TODO: What else do I do here?
@@ -39,7 +39,7 @@ router.post('/saveEvent', (req, res, next) => {
     votersTag: req.body.votersTag,
     startDate: req.body.startDate,
     endDate: req.body.endDate,
-    description: req.body.description,
+    description: req.body.eventDescription,
     candidateIDs: cids,
   });
 
