@@ -138,7 +138,7 @@
         formData.candidates.push(candidate)
       }
       // console.log(formData)
-      fetch(local_addr + '/user/event' ,{
+      fetch(local_addr + '/events/saveEvent' ,{
         
         method:'POST',
         headers:{

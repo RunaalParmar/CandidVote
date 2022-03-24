@@ -28,7 +28,7 @@ const eventModel = new mongoose.Schema({
         type: String,
         required: true,
     },
-    candidates: [{ // An array of strings representing candidate IDs.
+    candidateIDs: [{ // An array of strings representing candidate IDs.
         type: String,
         required: true,
     }]
