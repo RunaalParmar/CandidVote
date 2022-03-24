@@ -65,7 +65,7 @@
     holderThree.classList.add('holder')
     
     let lableThree = document.createElement('span')
-    lableThree.innerHTML = 'Affilation'
+    lableThree.innerHTML = 'Affiliation'
     lableThree.classList.add('on_touch')
     
   

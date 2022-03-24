@@ -10,16 +10,28 @@ const eventModel = new mongoose.Schema({
     },
     eventName: {
         type: String,
-        required:true,
+        required: true,
+    },
+    votersTag: {
+        type: String,
+        required: true,
     },
     startDate: {
         type: Date,
-        required:true,
+        required: true,
     },
     endDate: {
         type: Date,
-        required:true,
-    }
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    candidates: [{ // An array of strings representing candidate IDs.
+        type: String,
+        required: true,
+    }]
 });
 
 // This model connects the collection and the schema.

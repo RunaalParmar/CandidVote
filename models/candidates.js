@@ -19,7 +19,7 @@ const candidateModel = new mongoose.Schema({
     affiliation: {
         type: String,
     },
-    description: {
+    platform: {
         type: String,
     }
 });
