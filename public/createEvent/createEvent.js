@@ -3,7 +3,7 @@
   const candidateName = document.getElementById('candidateName');
   const candidateEmail = document.getElementById('candidateEmail');
   const candidateParty =document.getElementById('candidateParty');
-  const candidateDescripttion = document.getElementById('candidateDescripttion');
+  const candidateDescription = document.getElementById('candidateDescription');
   const candidates = document.getElementById('candidates')
   const eventForm = document.getElementById('eventForm')
 
@@ -90,7 +90,7 @@
     
   
     let inputBox4 = document.createElement('textarea')
-    inputBox4.value = candidateDescripttion.value
+    inputBox4.value = candidateDescription.value
     
     // inputBox4.classList.add('eventField')
     inputBox4.classList.add('box1')

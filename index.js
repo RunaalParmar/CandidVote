@@ -51,6 +51,9 @@ auth.initPassport(app);
 const users = require('./routes/users');
 app.use('/users', users);
 
+const events = require('./routes/events');
+app.use('/events', events);
+
 // SERVER LAUNCH
 app.listen(port, () => {
   console.log(`CandidVoTe app listening on port ${port}`);

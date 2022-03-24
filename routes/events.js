@@ -6,16 +6,16 @@ const router = express.Router();
 
 router.post('/saveEvent', (req, res, next) => {
   // Generate and store the event ID for this newly created event.
-  const eid = ""; // TODO
+  const eid = "0000"; // TODO
 
   // Array to hold the Candidate IDs that will be generated.
   const cids = [];
 
-  console.log(req); // TODO: this is for testing, remove later.
+  console.log(req.body); // TODO: this is for testing, remove later.
 
   // Extract the candidates data from the received event object.
   for(const candidate of req.candidates) {
-    const cid = ""; // TODO
+    const cid = "1111"; // TODO
 
     // Create new candidate item.
     const newCandidate = new Candidate({
@@ -48,23 +48,24 @@ router.post('/saveEvent', (req, res, next) => {
       console.log(user);
     next();
   });
-}, passport.authenticate('local', {
-    failureRedirect: '/login-failure'
-}), (req, res)=>{
-    if(req.user) {
-      let url = "";
-
-    if(req.user.authLevel == "admin" || req.user.authLevel == "superAdmin") {
-      url = '/adminDashboard/dashboard_admin.html';
-    } else {
-      url = '/voterDashboard/dashboard_voter.html';
-    }
-
-    res.status(200).send({
-      "uid": req.user.uid,
-      url
-    });
-  }
 });
+// }, passport.authenticate('local', {
+//     failureRedirect: '/login-failure'
+// }), (req, res)=>{
+//     if(req.user) {
+//       let url = "";
+
+//     if(req.user.authLevel == "admin" || req.user.authLevel == "superAdmin") {
+//       url = '/adminDashboard/dashboard_admin.html';
+//     } else {
+//       url = '/voterDashboard/dashboard_voter.html';
+//     }
+
+//     res.status(200).send({
+//       "uid": req.user.uid,
+//       url
+//     });
+//   }
+// });
 
 module.exports = router;
