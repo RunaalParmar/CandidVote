@@ -28,6 +28,7 @@ registerForm.addEventListener('submit', (event) => {
 
     formData.gender = formDataAdditional.gender;
 
+    let resStatus = null;
     fetch(localhost_addr + '/users/register', {
         method: 'POST',
         headers: {
@@ -38,19 +39,20 @@ registerForm.addEventListener('submit', (event) => {
     })
         .then(response => {
             if(response.status === 401) {
+                resStatus = 401;
                 let errMsg = document.getElementById("errorMessageSignIn");
                 errMsg.style.display = "block";
             } else if(response.status === 200) {
-                sessionStorage.setItem("uid", response.user.uid);
-                window.location.replace(response.url);
+                resStatus = 200
             } 
-            console.log(response)
             return response.json()
         })
         .then(data => {
-            console.log('New User Info', data);
             if(response.status === 403) {
                 document.getElementById('errorMessage').innerHTML = data.msg;
+            } else if(resStatus === 200) {
+                sessionStorage.setItem("uid", data.uid);
+                window.location.replace(data.url);
             }
         })
         .catch((error) => {

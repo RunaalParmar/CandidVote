@@ -154,7 +154,7 @@
         
       }).then(data => {
         console.log(data)
-        candidates,innerHTML ="";
+        candidates.innerHTML ="";
       }).catch((error) => {
         console.error('Error' , error)
       })
