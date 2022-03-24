@@ -36,27 +36,30 @@ signInForm.addEventListener('submit', (event) => {
 
     const formData = {email: signInEmail, password: signInPassword}
 
+    let resStatus = null;
     fetch(localhost_addr + '/users/signIn', {
         method: 'POST',
         headers: {
-        	'Accept': 'application/json',
-        	'Content-Type': 'application/json'
-    	},
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(formData)
     })
         .then(response => {
             if(response.status === 401) {
+                resStatus = 401;
                 let errMsg = document.getElementById("errorMessageSignIn");
                 errMsg.style.display = "block";
             } else if(response.status === 200) {
-                sessionStorage.setItem("email", signInEmail);
-                window.location.replace(response.url);
+                resStatus = 200;
             } 
-            console.log(response)
             return response.json()
         })
         .then(data => {
-            console.log('User Info', data)
+            if (resStatus === 200){
+                sessionStorage.setItem("uid", data.uid);
+                window.location.replace(data.url);
+            }
         })
         .catch((error) => {
             console.error('Error:', error)

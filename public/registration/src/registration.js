@@ -28,8 +28,6 @@ registerForm.addEventListener('submit', (event) => {
 
     formData.gender = formDataAdditional.gender;
 
-    console.log(formData); // TODO: Remove
-
     fetch(localhost_addr + '/users/register', {
         method: 'POST',
         headers: {
@@ -38,7 +36,17 @@ registerForm.addEventListener('submit', (event) => {
     	},
         body: JSON.stringify(formData)
     })
-        .then(response => response.json())
+        .then(response => {
+            if(response.status === 401) {
+                let errMsg = document.getElementById("errorMessageSignIn");
+                errMsg.style.display = "block";
+            } else if(response.status === 200) {
+                sessionStorage.setItem("uid", response.user.uid);
+                window.location.replace(response.url);
+            } 
+            console.log(response)
+            return response.json()
+        })
         .then(data => {
             console.log('New User Info', data);
             if(response.status === 403) {

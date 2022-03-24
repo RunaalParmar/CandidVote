@@ -68,11 +68,18 @@ router.post("/createUser", async (req, res) => {
 
 router.post('/signIn', passport.authenticate('local'), (req, res)=>{
   if(req.user) {
+    let url = "";
+
     if(req.user.authLevel == "admin" || req.user.authLevel == "superAdmin") {
-      res.redirect('/adminDashboard/dashboard_admin.html');
+      url = '/adminDashboard/dashboard_admin.html';
     } else {
-      res.redirect('/voter-dash');
+      url = '/voterDashboard/dashboard_voter.html';
     }
+
+    res.status(200).send({
+      "uid": req.user.uid,
+      url
+    });
   }
 });
 
@@ -119,13 +126,19 @@ router.post('/register', (req, res, next) => {
     failureRedirect: '/login-failure'
 }), (req, res)=>{
     if(req.user) {
-      if(req.user.authLevel == "admin") {
-        res.redirect('/adminDashboard/dashboard_admin.html');
-        // res.send({"user": req.user});
-      } else {
-        res.redirect('/voter-dash');
-      }
+      let url = "";
+
+    if(req.user.authLevel == "admin" || req.user.authLevel == "superAdmin") {
+      url = '/adminDashboard/dashboard_admin.html';
+    } else {
+      url = '/voterDashboard/dashboard_voter.html';
     }
+
+    res.status(200).send({
+      "user": req.user,
+      url
+    });
+  }
 });
 
 module.exports = router;
