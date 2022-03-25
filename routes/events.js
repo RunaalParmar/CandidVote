@@ -48,6 +48,9 @@ router.post('/saveEvent', (req, res, next) => {
       console.log(user);
     next();
   });
+
+  // TODO: Fix the below.
+  res.redirect('/adminDashboard/dashboard_admin.html');
 });
 // }, passport.authenticate('local', {
 //     failureRedirect: '/login-failure'
