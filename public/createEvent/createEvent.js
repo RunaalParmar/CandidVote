@@ -137,7 +137,7 @@
         }
         formData.candidates.push(candidate)
       }
-      // console.log(formData)
+
       fetch(local_addr + '/events/saveEvent', {
         method:'POST',
         headers:{
@@ -148,17 +148,19 @@
       })
 
       .then(response => {
-        return response.json()  
+        if(response.status === 200) {
+          window.location.replace(response.url);
+        }
+        return response.json();
       })
 
       .then(data => {
-        console.log(data)
-        // candidates.innerHTML ="";
-        window.location.replace(data.url);
+        console.log(data);
+        candidates.innerHTML ="";
       })
       
       .catch((error) => {
-        console.error('Error:' , error)
+        console.error('Error:' , error);
       })
       
     })
