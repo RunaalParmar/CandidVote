@@ -112,17 +112,16 @@
   
     button.classList.add('card__vote_btn')
     button.setAttribute('id' , `${eid}`)
-    button.setAttribute('onclick' , `sessionStorage.setItem('eventName', this.parentElement.firstElementChild.firstElementChild.innerText);
-                                     sessionStorage.setItem('eid', this.id)
+    button.setAttribute('onclick' , `sessionStorage.setItem('eid', this.id);
                                     let loader_container = document.getElementById('loader_container');
-                                    loader_container.style = 'display :block'; const closed_event_message = document.getElementById('${mesg_id}');
+                                    loader_container.style = 'display :block'; const closed_event_message = document.getElementById('${mesg_id.toString()}');
                                     closed_event_message.innerHTML = 'Your vote has been collected for this event, you can no longer vote';
                                     this.disabled = true`)
     button.setAttribute('type' , 'button')
     button.innerHTML = "Start"
     
     endedVote.classList.add('card__btn_disabled')
-    endedVote.setAttribute('id' , `${mesg_id}`)
+    endedVote.setAttribute('id' , `${mesg_id.toString()}`)
     
     box.classList.add('card__event_box')
     box.appendChild(name)
@@ -164,8 +163,9 @@
        })
        .then(data => {
         //  console.log(data)
-         for (const baby of data){
-            let temp = addEvent(baby.eid ,baby.eventName, baby.startDate , baby.endDate,baby.mesg_id)
+        let mesg_id = 0
+          for (const baby of data){
+            let temp = addEvent(baby.eid , baby.eventName, baby.startDate , baby.endDate, mesg_id + 1)
             event_container.append(temp)
            }
            graphics_containerID.style = 'display:none';
@@ -198,7 +198,9 @@
    
    vote_btn.classList.add('vote_btn');
    vote_btn.setAttribute('id' , id)
-   vote_btn.setAttribute("onclick" , " value_one =  this.id  ; let value = sessionStorage.getItem('eventName'); let obj = {} ; obj.eventName = value;  obj.candidate_id = value_one; sessionStorage.setItem('vote', JSON.stringify(obj)) ; const vote_message = document.getElementById('vote__message'); vote_message.innerHTML = 'You  have  Vote!' ")
+   vote_btn.setAttribute("onclick" , ` sessionStorage.setItem('cid',  this.id);
+                                       const vote_message = document.getElementById('vote__message');
+                                       vote_message.innerHTML = 'You  have  Vote!' `)
    vote_btn.innerHTML = "vote";
    
    vote_card.classList.add('vote__card')
@@ -230,8 +232,8 @@
       vote__message.innerHTML=""
       
       const voteDetails = {
-        event : window.sessionStorage.getItem('eventName'),
-        candidate: window.sessionStorage.getItem('vote')
+        eid : window.sessionStorage.getItem('eid'),
+        cid: window.sessionStorage.getItem('cid')
         
       }
       
