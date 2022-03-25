@@ -138,25 +138,27 @@
         formData.candidates.push(candidate)
       }
       // console.log(formData)
-      fetch(local_addr + '/events/saveEvent' ,{
-        
+      fetch(local_addr + '/events/saveEvent', {
         method:'POST',
         headers:{
           "Accept": "application/json",
           "Content-Type": "application/json"
         },
-        body:JSON.stringify(formData)
-        
-      }).then(response => {
-        
-        
-        response.json()
-        
-      }).then(data => {
+        body:JSON.stringify(formData)  
+      })
+
+      .then(response => {
+        return response.json()  
+      })
+
+      .then(data => {
         console.log(data)
-        candidates.innerHTML ="";
-      }).catch((error) => {
-        console.error('Error' , error)
+        // candidates.innerHTML ="";
+        window.location.replace(data.url);
+      })
+      
+      .catch((error) => {
+        console.error('Error:' , error)
       })
       
     })
