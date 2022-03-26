@@ -4,18 +4,39 @@ const {Event} = require('../models/events');
 const {Candidate} = require('../models/candidates');
 const router = express.Router();
 
-router.post('/saveEvent', (req, res, next) => {
-  // Generate and store the event ID for this newly created event.
-  const eid = "0000"; // TODO
+router.post('/saveEvent', async (req, res, next) => {
+  // Generate a random, unique eid.
+  let eid = "";
+
+  while(eid === "") {
+    // Generate random eid.
+    let newRand = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+
+    // Ensure that generated ID does not already exist.
+    let eventID = await Event.count({eid: newRand});
+    if(eventID === 0) {
+      eid = newRand;
+    }
+  }
 
   // Array to hold the Candidate IDs that will be generated.
   const cids = [];
 
-  console.log(req.body); // TODO: this is for testing, remove later.
-
   // Extract the candidates data from the received event object.
   for(const candidate of req.body.candidates) {
-    const cid = "1111"; // TODO
+    // Generate a random, unique cid.
+    let cid = "";
+
+    while(cid === "") {
+      // Generate random cid.
+      let newRand = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+
+      // Ensure that generated ID does not already exist.
+      let candidateID = await Candidate.count({cid: newRand});
+      if(candidateID === 0) {
+        cid = newRand;
+      }
+    }
 
     // Create new candidate item.
     const newCandidate = new Candidate({
@@ -26,7 +47,7 @@ router.post('/saveEvent', (req, res, next) => {
       platform: candidate.Platform,
     });
 
-    newCandidate.save(); // TODO: What else do I do here?
+    await newCandidate.save();
 
     // Add new candidate ID to the list of IDs.
     cids.push(cid);
@@ -43,32 +64,13 @@ router.post('/saveEvent', (req, res, next) => {
     candidateIDs: cids,
   });
 
-  newEvent.save()
+  await newEvent.save()
     .then((user) => {
       console.log(user);
     next();
   });
 
-  // TODO: Fix the below.
   res.redirect('/adminDashboard/dashboard_admin.html');
 });
-// }, passport.authenticate('local', {
-//     failureRedirect: '/login-failure'
-// }), (req, res)=>{
-//     if(req.user) {
-//       let url = "";
-
-//     if(req.user.authLevel == "admin" || req.user.authLevel == "superAdmin") {
-//       url = '/adminDashboard/dashboard_admin.html';
-//     } else {
-//       url = '/voterDashboard/dashboard_voter.html';
-//     }
-
-//     res.status(200).send({
-//       "uid": req.user.uid,
-//       url
-//     });
-//   }
-// });
 
 module.exports = router;
