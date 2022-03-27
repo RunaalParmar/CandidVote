@@ -12,72 +12,72 @@
   
   const results  = [];
   
-  function addEvent(eid ,eventName, startDate , endDate,mesg_id){
+  function addEvent(eid, eventName, startDate , endDate, mesg_id){
     const name = document.createElement('div');
-    const DateLabelOne = document.createElement('label')
-    const DateLabelTwo = document.createElement('label')
-    const DateValueOne = document.createElement('span')
-    const DateValueTwo = document.createElement('span')
-    const DateItemOne = document.createElement('div')
-    const DateItemTwo = document.createElement('div')
+    const DateLabelOne = document.createElement('label');
+    const DateLabelTwo = document.createElement('label');
+    const DateValueOne = document.createElement('span');
+    const DateValueTwo = document.createElement('span');
+    const DateItemOne = document.createElement('div');
+    const DateItemTwo = document.createElement('div');
     const button = document.createElement('button');
     const description = document.createElement('div');
-    const endedVote = document.createElement('div')
+    const endedVote = document.createElement('div');
     const box = document.createElement('div');
     const details = document.createElement('div');
     const card = document.createElement('div');
-    const column = document.createElement('div')
+    const column = document.createElement('div');
     
     
     name.classList.add('card__event-name');
     name.innerHTML = eventName;
     
-    description.classList.add('card__event-description')
+    description.classList.add('card__event-description');
     
-    DateLabelOne.classList.add('card__date-label')
-    DateLabelOne.innerHTML = "Start Date"
+    DateLabelOne.classList.add('card__date-label');
+    DateLabelOne.innerHTML = "Start Date";
     
     DateValueOne.classList.add('card__date_value');
     DateValueOne.innerHTML = startDate;
     
-    DateItemOne.classList.add('card__date_item')
-    DateItemOne.appendChild(DateLabelOne)
-    DateItemOne.appendChild(DateValueOne)
-    description.appendChild(DateItemOne)
+    DateItemOne.classList.add('card__date_item');
+    DateItemOne.appendChild(DateLabelOne);
+    DateItemOne.appendChild(DateValueOne);
+    description.appendChild(DateItemOne);
     
     
     DateLabelTwo.classList.add('card__date-label')
-    DateLabelTwo.innerHTML = "End Date"
+    DateLabelTwo.innerHTML = "End Date";
     
     DateValueTwo.classList.add('card__date_value');
     DateValueTwo.innerHTML = endDate;
     
-    DateItemTwo.classList.add('card__date_item')
-    DateItemTwo.appendChild(DateLabelTwo)
-    DateItemTwo.appendChild(DateValueTwo)
-    description.appendChild(DateItemTwo)
+    DateItemTwo.classList.add('card__date_item');
+    DateItemTwo.appendChild(DateLabelTwo);
+    DateItemTwo.appendChild(DateValueTwo);
+    description.appendChild(DateItemTwo);
     
   
-    button.classList.add('card__vote_btn')
-    button.setAttribute('id' , `${eid}`)
+    button.classList.add('card__vote_btn');
+    button.setAttribute('id' , `${eid}`);
     button.setAttribute('onclick' , `sessionStorage.setItem('eid', this.id);
                                     let loader_container = document.getElementById('loader_container');
                                     loader_container.style = 'display :block'; const closed_event_message = document.getElementById('${mesg_id.toString()}');
                                     closed_event_message.innerHTML = 'Your vote has been collected for this event, you can no longer vote';
                                     this.disabled = true`)
-    button.setAttribute('type' , 'button')
-    button.innerHTML = "Start"
+    button.setAttribute('type' , 'button');
+    button.innerHTML = "Start";
     
-    endedVote.classList.add('card__btn_disabled')
-    endedVote.setAttribute('id' , `${mesg_id.toString()}`)
+    endedVote.classList.add('card__btn_disabled');
+    endedVote.setAttribute('id' , `${mesg_id.toString()}`);
     
-    box.classList.add('card__event_box')
-    box.appendChild(name)
-    box.appendChild(description)
+    box.classList.add('card__event_box');
+    box.appendChild(name);
+    box.appendChild(description);
     
-    details.classList.add('card__event-details')
-    details.appendChild(box)
-    details.appendChild(button)
+    details.classList.add('card__event-details');
+    details.appendChild(box);
+    details.appendChild(button);
     details.appendChild(endedVote);
     
     card.classList.add('card');
@@ -89,30 +89,29 @@
     return column;
   }
   
-  async function  loadEvents(){
-    const userID = {
-      ID : window.sessionStorage.getItem('userID')
-    }
+  async function loadEvents() {
+    // Get user's ID from session storage.
+    const uid = window.sessionStorage.getItem('uid');
 
-    await fetch(localhost_addr + '/user/load_event' ,{
+    await fetch(localhost_addr + '/vote/loadEventsForUser', {
       method:'GET',
       headers:{
-        'Accept':'application/json',
-        'Content-Type' : 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body:JSON.stringify(userID)
+      body:JSON.stringify(uid)
     })
 
     .then(response => {
-      return response.json()
+      return response.json();
     })
 
     .then(data => {
-      //  console.log(data)
-      let mesg_id = 0
+      //  console.log(data);
+      let mesg_id = 0;
       for (const baby of data){
-        let temp = addEvent(baby.eid , baby.eventName, baby.startDate , baby.endDate, mesg_id + 1)
-        event_container.append(temp)
+        let temp = addEvent(baby.eid , baby.eventName, baby.startDate , baby.endDate, mesg_id + 1);
+        event_container.append(temp);
       }
       graphics_containerID.style = 'display:none';
       event_container.style = 'display: flex';
