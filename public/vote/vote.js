@@ -9,60 +9,8 @@
   const vote__message = document.getElementById('vote__message')
   const graphics_containerID = document.getElementById('graphics_containerID')
   const localhost_addr = 'http://localhost:5000';
-  // const result = {
-  //   eventName:"",
-  //   candidate:""
-  // }
   
   const results  = [];
-  
-  // const events = [
-  //        {
-  //          eid: '213413',
-  //          eventName : 'Provincial General Election Alberta',
-  //          startDate : 'March 1 2023',
-  //          endDate: 'May 31 2023',
-  //          mesg_id:'1'
-  //        },
-  //        {
-  //         eid: '102025',
-  //         eventName : 'Provincial General Election Ontario',
-  //         startDate : 'June 2, 2022',
-  //         endDate: 'June 2, 2022',
-  //         mesg_id:'2'
-  //       },
-  //       {
-  //         eid: '132134',
-  //         eventName : 'Provincial General Election BC',
-  //         startDate : 'October 15, 2022',
-  //         endDate: 'October 15, 2022',
-  //         mesg_id:'3'
-  //       }
-  // ]
-  // const candidatesArray = [
-  //         {
-  //           name : "Christopher",
-  //           descriptiion : "Canadian Nationalist Party",
-  //           id : "christopher@gmail.com"
-  //         },
-          
-  //         {
-  //           name : "Michael",
-  //           descriptiion : "Centrist Party of Canada",
-  //           id : "michael@gmail.com"
-  //         },
-
-  //         {
-  //           name : "Uche",
-  //           descriptiion : "Conservative Party of Canada",
-  //           id : "uche@gmail.com"
-  //         },
-  //         {
-  //           name : "Watson",
-  //           descriptiion : "Veterans Coalition  Canada",
-  //           id : "watson@gmail.com"
-  //         }
-  // ]
   
   function addEvent(eid ,eventName, startDate , endDate,mesg_id){
     const name = document.createElement('div');
@@ -139,17 +87,13 @@
     column.appendChild(card);
     
     return column;
-    
   }
-  
-  // event_container.appendChild(addEvent('One' , '123446786909'))
-  // event_container.appendChild(addEvent('Two','1020304050'))
-  // event_container.appendChild(addEvent('Three', '11223344556677'))
   
   async function  loadEvents(){
     const userID = {
-       ID : window.sessionStorage.getItem('userID')
+      ID : window.sessionStorage.getItem('userID')
     }
+
     await fetch(localhost_addr + '/user/load_event' ,{
       method:'GET',
       headers:{
@@ -158,75 +102,62 @@
       },
       body:JSON.stringify(userID)
     })
-       .then(response => {
-         return response.json()
-       })
-       .then(data => {
-        //  console.log(data)
-        let mesg_id = 0
-          for (const baby of data){
-            let temp = addEvent(baby.eid , baby.eventName, baby.startDate , baby.endDate, mesg_id + 1)
-            event_container.append(temp)
-           }
-           graphics_containerID.style = 'display:none';
-           event_container.style = 'display: flex';
 
-       })
-    
-  
-     
+    .then(response => {
+      return response.json()
+    })
+
+    .then(data => {
+      //  console.log(data)
+      let mesg_id = 0
+      for (const baby of data){
+        let temp = addEvent(baby.eid , baby.eventName, baby.startDate , baby.endDate, mesg_id + 1)
+        event_container.append(temp)
+      }
+      graphics_containerID.style = 'display:none';
+      event_container.style = 'display: flex';
+    })
   }
   
   
   function addCandidate(name, description , id){
-   const candidate_name = document.createElement('div');
-   const candidate_description = document.createElement('div');
-   const candidate_box = document.createElement('div');
-   const vote_btn = document.createElement('button');
-   const vote_card = document.createElement('div');
-   const column = document.createElement('div');
-   
-   candidate_name.classList.add('vote__candidate-name');
-   candidate_name.innerHTML = name;
-   
-   candidate_description.classList.add('vote__candidate-description');
-   candidate_description.innerHTML = description;
-   
-   candidate_box.classList.add('vote__candidate_box');
-   candidate_box.appendChild(candidate_name)
-   candidate_box.appendChild(candidate_description)
-   
-   vote_btn.classList.add('vote_btn');
-   vote_btn.setAttribute('id' , id)
-   vote_btn.setAttribute("onclick" , ` sessionStorage.setItem('cid',  this.id);
-                                       const vote_message = document.getElementById('vote__message');
-                                       vote_message.innerHTML = 'You  have  Vote!' `)
-   vote_btn.innerHTML = "vote";
-   
-   vote_card.classList.add('vote__card')
-   vote_card.appendChild(candidate_box)
-   vote_card.appendChild(vote_btn)
-   
-   column.classList.add('vote__col-1-4')
-   column.appendChild(vote_card)
-   
-   return column;
+    const candidate_name = document.createElement('div');
+    const candidate_description = document.createElement('div');
+    const candidate_box = document.createElement('div');
+    const vote_btn = document.createElement('button');
+    const vote_card = document.createElement('div');
+    const column = document.createElement('div');
+    
+    candidate_name.classList.add('vote__candidate-name');
+    candidate_name.innerHTML = name;
+    
+    candidate_description.classList.add('vote__candidate-description');
+    candidate_description.innerHTML = description;
+    
+    candidate_box.classList.add('vote__candidate_box');
+    candidate_box.appendChild(candidate_name)
+    candidate_box.appendChild(candidate_description)
+    
+    vote_btn.classList.add('vote_btn');
+    vote_btn.setAttribute('id' , id)
+    vote_btn.setAttribute("onclick" , ` sessionStorage.setItem('cid',  this.id);
+                                        const vote_message = document.getElementById('vote__message');
+                                        vote_message.innerHTML = 'You  have  Vote!' `)
+    vote_btn.innerHTML = "vote";
+    
+    vote_card.classList.add('vote__card')
+    vote_card.appendChild(candidate_box)
+    vote_card.appendChild(vote_btn)
+    
+    column.classList.add('vote__col-1-4')
+    column.appendChild(vote_card)
+    
+    return column;
   }
   
   
-  // event_one.addEventListener('click' , () => {
-    
-  //    for (const child of candidatesArray){
-        
-  //     let temp = addCandidate(child.name ,child.descriptiion, child.id)
-  //     vote_container.append(temp)
-  //    }
-     
-
-  // })
-  
-  if(exist_vote){
-    exist_vote.addEventListener('click' , () => {
+  if(exist_vote) {
+    exist_vote.addEventListener('click', () => {
       vote_display.style = "display: none";
       can_box.innerHTML ='';
       vote__message.innerHTML=""
@@ -234,7 +165,6 @@
       const voteDetails = {
         eid : window.sessionStorage.getItem('eid'),
         cid: window.sessionStorage.getItem('cid')
-        
       }
       
       fetch(localhost_addr + '/user/save_vote' ,{
@@ -245,12 +175,14 @@
         },
         body:JSON.stringify(voteDetails)
       })
-         .then(response => {
-           return response.json()
-         })
-         .then(data => {
-           console.log(data)
-         })
+
+      .then(response => {
+        return response.json()
+      })
+
+      .then(data => {
+        console.log(data)
+      })
 
       // console.log('results');
       // results.push(window.sessionStorage.getItem('vote'))
@@ -258,73 +190,64 @@
       // console.log(results)
       
     })
-  
-}
+  }
 
-async function loadCandidates(){
-   const eventDetails = {
-    ID : window.sessionStorage.getItem('userID'),
-    EID : window.sessionStorage.getItem('eid')
-   }
-   await fetch(localhost_addr + '/user/load_candidates' ,{
-    method:'GET',
-    headers:{
-      'Accept':'application/json',
-      'Content-Type' : 'application/json'
-    },
-    body:JSON.stringify(eventDetails)
-  })
-     .then(response => {
-       return response.json()
-     })
-     .then(data => {
-         console.log(data)
-        for (const child of candidatesArray){
-          
+  async function loadCandidates(){
+    const eventDetails = {
+      ID : window.sessionStorage.getItem('userID'),
+      EID : window.sessionStorage.getItem('eid')
+    }
+    await fetch(localhost_addr + '/user/load_candidates' ,{
+      method:'GET',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify(eventDetails)
+    })
+
+    .then(response => {
+      return response.json()
+    })
+
+    .then(data => {
+      console.log(data)
+      for (const child of candidatesArray){
         let temp = addCandidate(child.name ,child.descriptiion, child.id)
         can_box.append(temp)
-       }
+      }
       loader_container.style = 'display : none';
       vote_display.style ='display : block'
-
-     })
-
-    
-}
+    })
+  }
 
 
-// Used to observe the changes in  the given element with respct to the viewport or the specified root "parent element".
-function onVisible(element, callback) {
-  new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if(entry.intersectionRatio > 0) {
-        callback(element);
-        // observer.disconnect();
-      }
-    });
-  }).observe(element);
-}
+  // Used to observe the changes in  the given element with respct to the viewport or the specified root "parent element".
+  function onVisible(element, callback) {
+    new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.intersectionRatio > 0) {
+          callback(element);
+          // observer.disconnect();
+        }
+      });
+    }).observe(element);
+  }
 
-onVisible(loader_container, loadCandidates);
+  onVisible(loader_container, loadCandidates);
 
-
-function onMonitor(element, callback) {
-  new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if(entry.intersectionRatio > 0) {
-        callback(element);
-        observer.disconnect();
-      }
-    });
-  }).observe(element);
-}
+  function onMonitor(element, callback) {
+    new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.intersectionRatio > 0) {
+          callback(element);
+          observer.disconnect();
+        }
+      });
+    }).observe(element);
+  }
  
-onMonitor(graphics_containerID, loadEvents)
-
-
-
-
-
+  onMonitor(graphics_containerID, loadEvents)
 
 })()
 
