@@ -44,11 +44,13 @@ registerForm.addEventListener('submit', (event) => {
                 errMsg.style.display = "block";
             } else if(response.status === 200) {
                 resStatus = 200
-            } 
+            } else if(response.status === 403) {
+                resStatus = 403
+            }
             return response.json()
         })
         .then(data => {
-            if(response.status === 403) {
+            if(resStatus === 403) {
                 document.getElementById('errorMessage').innerHTML = data.msg;
             } else if(resStatus === 200) {
                 sessionStorage.setItem("uid", data.uid);
