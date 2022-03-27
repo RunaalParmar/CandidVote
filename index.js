@@ -1,10 +1,15 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const routes = require('./routes/voters_routes')
+const Web3 = require('web3');
 const passport = require('passport');
-const {MongoClient} = require('mongodb');
+const mongodb = require('mongodb').MongoClient
+//const {MongoClient} = require('mongodb');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const artifacts = require('./build/contracts/Vote.json');
+const contract = require('@truffle/contract');
 const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
 
@@ -14,47 +19,56 @@ const localhost_addr = "http://localhost:";
 
 const mongoURL = "mongodb+srv://r3parmar:CandidVoTePWD@candidvote.wxjmp.mongodb.net/CandidVoTeDB?retryWrites=true&w=majority";
 
-// CONNECT TO DATABASE
-async function connectToDB() {
-    try {
-        await mongoose.connect(mongoURL);
-        console.log("Connected To DB"); 
-    } catch(e) {
-        console.log(e);
-    }  
+
+// Block chain connection
+if (typeof web3 !== 'undefined') {
+    var web3 = new Web3(web3.currentProvider); 
+} else {
+    var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:7545'));
+    console.log("########### web3 object created ################")
 }
+const LMS = contract(artifacts)
+LMS.setProvider(web3.currentProvider)
 
-connectToDB();
 
-// MIDDLEWARE
-app.options("*", cors({ origin: localhost_addr + port, optionsSuccessStatus: 200 }));
-app.use(cors({ origin: localhost_addr + port, optionsSuccessStatus: 200 }));
+mongoose.connect(mongoURL).then(async() =>{
+    // const db =client.db('Cluster0')
+    // const accounts = await web3.eth.getAccounts();
+    // const lms = await LMS.deployed();
+    // routes(app, db, accounts, lms);
 
-app.use('/', express.static('public'));
-app.use(bodyParser.json());
+    // MIDDLEWARE
+    app.options("*", cors({ origin: localhost_addr + port, optionsSuccessStatus: 200 }));
+    app.use(cors({ origin: localhost_addr + port, optionsSuccessStatus: 200 }));
+    app.use(express.json());
+    app.use('/', express.static('public'));
+    app.use(bodyParser.json());
 
-app.use(session({
-    secret: 'my secret, any string', // TODO: Change to rely on env var later.
-    store: MongoStore.create({mongoUrl: mongoURL}),
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24  // 1 day
-    },
-    resave: false,
-    saveUninitialized: false
-}));
+    app.use(session({
+        secret: 'my secret, any string', // TODO: Change to rely on env var later.
+        store: MongoStore.create({mongoUrl: mongoURL}),
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24  // 1 day
+        },
+        resave: false,
+        saveUninitialized: false
+    }));
 
-// PASSPORT AUTH
-const auth = require('./auth');
-auth.initPassport(app);
+    // PASSPORT AUTH
+    const auth = require('./auth');
+    auth.initPassport(app);
 
-// ROUTES
-const users = require('./routes/users');
-app.use('/users', users);
+    // ROUTES
+    const users = require('./routes/users');
+    app.use('/users', users);
 
-const events = require('./routes/events');
-app.use('/events', events);
+    const events = require('./routes/events');
+    app.use('/events', events);
 
-// SERVER LAUNCH
-app.listen(port, () => {
-  console.log(`CandidVoTe app listening on port ${port}`);
-});
+    // SERVER LAUNCH
+    app.listen(process.env.PORT || port, () => {
+        console.log('Listening on port '+ (port));
+        //console.log(accounts)
+     })
+
+})
