@@ -72,7 +72,6 @@ router.post('/signIn', passport.authenticate('local'), (req, res)=>{
 
     if(req.user.authLevel == "admin" || req.user.authLevel == "superAdmin") {
       url = '/adminDashboard/dashboard_admin.html';
-      // url = '/createEvent/createEvent.html'; // TODO change to the above.
     } else {
       url = '/voterDashboard/dashboard_voter.html';
     }

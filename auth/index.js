@@ -1,3 +1,6 @@
+// This file defines the strategy used to verify users logging into the system.
+// This uses passport.js to handle login.
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const {User} = require('../models/users');
