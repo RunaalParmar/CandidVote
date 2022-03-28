@@ -66,6 +66,7 @@
       let loader_container = document.getElementById('loader_container');
       loader_container.style = 'display :block'; const closed_event_message = document.getElementById(mesg_id.toString());
       closed_event_message.innerHTML = 'Your vote has been collected for this event, you can no longer vote';
+      button.disabled = true;
       loadCandidates(eid);
     });
     
