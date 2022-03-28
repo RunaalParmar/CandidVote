@@ -5,6 +5,7 @@ const {Event} = require('../models/events');
 const {Candidate} = require('../models/candidates');
 const router = express.Router();
 
+
 // Load the event data for all events that a given user is eligible for.
 router.get('/loadEventsForUser', async (req, res, next) => {
   const uid = req.query.uid;
@@ -12,13 +13,16 @@ router.get('/loadEventsForUser', async (req, res, next) => {
   // Using uid, get the user's orgName.
   const userData = await User.findOne({uid: uid});
   const userOrgName = userData.orgName;
-  
+
   // Using orgName, find all events with same voter tag.
-  const eventsForUser = await Event.find({'voterTag': userOrgName});
+  const eventsForUser = await Event.find({voterTag: "test2org"}); // TODO: this is bugged, it returns all events, not just where voterTag == orgName
+
+  console.log(eventsForUser);
 
   // send back events as list of objects.
   res.status(200).send({eventsForUser});
 });
+
 
 // Load the candidate data for a given event.
 router.get('/loadCandidates', async (req, res, next) => {
@@ -39,5 +43,6 @@ router.get('/loadCandidates', async (req, res, next) => {
 
   res.status(200).send({candDataArr});
 });
+
 
 module.exports = router;

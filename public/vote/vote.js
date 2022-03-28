@@ -11,33 +11,8 @@
   const localhost_addr = 'http://localhost:5000';
   
   const results = [];
-  
-  async function loadCandidates(eid){
-    await fetch(localhost_addr + `/votes/loadCandidates?eid=${eid}`, {
-      method:'GET',
-      headers:{
-        'Accept':'application/json',
-        'Content-Type':'application/json'
-      },
-    })
 
-    .then(response => {
-      return response.json()
-    })
-
-    .then(data => {
-      console.log(data)
-      for (const child of data.candDataArr){
-        let temp = addCandidate(child.fullName, child.affiliation, child.id)
-        can_box.append(temp)
-      }
-
-      loader_container.style = 'display : none';
-      vote_display.style ='display : block'
-    })
-  }
-
-  function addEvent(eid, eventName, startDate , endDate, mesg_id){
+  function addEvent(eid, eventName, startDate , endDate, mesg_id) {
     const name = document.createElement('div');
     const DateLabelOne = document.createElement('label');
     const DateLabelTwo = document.createElement('label');
@@ -84,7 +59,7 @@
     
   
     button.classList.add('card__vote_btn');
-    button.setAttribute('id' , `${eid}`);
+    button.setAttribute('id' , eid);
     button.setAttribute('type' , 'button');
 
     button.addEventListener("click", () => {
@@ -97,7 +72,7 @@
     button.innerHTML = "Start";
     
     endedVote.classList.add('card__btn_disabled');
-    endedVote.setAttribute('id' , `${mesg_id.toString()}`);
+    endedVote.setAttribute('id', `${mesg_id.toString()}`);
     
     box.classList.add('card__event_box');
     box.appendChild(name);
@@ -137,8 +112,9 @@
       console.log(data);
       let mesg_id = 0;
       for (const event of data.eventsForUser){
-        let temp = addEvent(event.eid , event.eventName, event.startDate , event.endDate, mesg_id + 1);
+        let temp = addEvent(event.eid , event.eventName, event.startDate , event.endDate, mesg_id);
         event_container.append(temp);
+        mesg_id = mesg_id + 1;
       }
 
       graphics_containerID.style = 'display:none';
@@ -146,8 +122,32 @@
     })
   }
   
+  async function loadCandidates(eid){
+    await fetch(localhost_addr + `/votes/loadCandidates?eid=${eid}`, {
+      method:'GET',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      },
+    })
+
+    .then(response => {
+      return response.json()
+    })
+
+    .then(data => {
+      console.log(data)
+      for (const child of data.candDataArr){
+        let temp = addCandidate(child.fullName, child.affiliation, child.cid, eid)
+        can_box.append(temp)
+      }
+
+      loader_container.style = 'display : none';
+      vote_display.style ='display : block'
+    })
+  }
   
-  function addCandidate(name, description , id){
+  function addCandidate(name, description, cid, eid){
     const candidate_name = document.createElement('div');
     const candidate_description = document.createElement('div');
     const candidate_box = document.createElement('div');
@@ -166,10 +166,14 @@
     candidate_box.appendChild(candidate_description)
     
     vote_btn.classList.add('vote_btn');
-    vote_btn.setAttribute('id' , id)
-    vote_btn.setAttribute("onclick" , ` sessionStorage.setItem('cid',  this.id);
-                                        const vote_message = document.getElementById('vote__message');
-                                        vote_message.innerHTML = 'Your vote has been cast!'`)
+    // vote_btn.setAttribute('cid' , cid)
+
+    vote_btn.addEventListener("click", () => {
+      const vote_message = document.getElementById('vote__message');
+      vote_message.innerHTML = 'Your vote has been cast!';
+      storeVote(cid, eid);
+    });
+
     vote_btn.innerHTML = "vote";
     
     vote_card.classList.add('vote__card')
@@ -182,38 +186,34 @@
     return column;
   }
   
-  
-  if(exist_vote) {
-    exist_vote.addEventListener('click', () => {
-      vote_display.style = "display: none";
-      can_box.innerHTML ='';
-      vote__message.innerHTML="";
-      
-      const voteDetails = {
-        eid : window.sessionStorage.getItem('eid'),
-        cid: window.sessionStorage.getItem('cid')
-      }
-      
-      fetch(localhost_addr + '/user/save_vote' ,{
-        method:'POST',
-        headers:{
-          'Accept':'application/json',
-          'Content-Type' : 'application/json'
-        },
-        body:JSON.stringify(voteDetails)
+  async function storeVote(cid, eid) {
+    if(exist_vote) {
+      exist_vote.addEventListener('click', () => {
+        vote_display.style = "display: none";
+        can_box.innerHTML ='';
+        vote__message.innerHTML="";
       })
+    }
 
-      .then(response => {
-        return response.json()
-      })
+    const voteDetails = {cid, eid}
 
-      .then(data => {
-        console.log(data)
-      })
+    fetch(localhost_addr + '/vote/storeVote' ,{
+      method:'POST',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type' : 'application/json'
+      },
+      body:JSON.stringify(voteDetails)
+    })
 
+    .then(response => {
+      return response.json()
+    })
+
+    .then(data => {
+      console.log(data)
     })
   }
-
 
   // Used to observe the changes in  the given element with respct to the viewport or the specified root "parent element".
   function onVisible(element, callback) {
