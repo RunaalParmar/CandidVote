@@ -10,8 +10,33 @@
   const graphics_containerID = document.getElementById('graphics_containerID')
   const localhost_addr = 'http://localhost:5000';
   
-  const results  = [];
+  const results = [];
   
+  async function loadCandidates(eid){
+    await fetch(localhost_addr + `/votes/loadCandidates?eid=${eid}`, {
+      method:'GET',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      },
+    })
+
+    .then(response => {
+      return response.json()
+    })
+
+    .then(data => {
+      console.log(data)
+      for (const child of data.candDataArr){
+        let temp = addCandidate(child.fullName, child.affiliation, child.id)
+        can_box.append(temp)
+      }
+
+      loader_container.style = 'display : none';
+      vote_display.style ='display : block'
+    })
+  }
+
   function addEvent(eid, eventName, startDate , endDate, mesg_id){
     const name = document.createElement('div');
     const DateLabelOne = document.createElement('label');
@@ -60,12 +85,15 @@
   
     button.classList.add('card__vote_btn');
     button.setAttribute('id' , `${eid}`);
-    button.setAttribute('onclick' , `sessionStorage.setItem('eid', this.id);
-                                    let loader_container = document.getElementById('loader_container');
-                                    loader_container.style = 'display :block'; const closed_event_message = document.getElementById('${mesg_id.toString()}');
-                                    closed_event_message.innerHTML = 'Your vote has been collected for this event, you can no longer vote';
-                                    this.disabled = true`)
     button.setAttribute('type' , 'button');
+
+    button.addEventListener("click", () => {
+      let loader_container = document.getElementById('loader_container');
+      loader_container.style = 'display :block'; const closed_event_message = document.getElementById(mesg_id.toString());
+      closed_event_message.innerHTML = 'Your vote has been collected for this event, you can no longer vote';
+      loadCandidates(eid);
+    });
+    
     button.innerHTML = "Start";
     
     endedVote.classList.add('card__btn_disabled');
@@ -93,13 +121,12 @@
     // Get user's ID from session storage.
     const uid = window.sessionStorage.getItem('uid');
 
-    await fetch(localhost_addr + '/vote/loadEventsForUser', {
+    await fetch(localhost_addr + `/votes/loadEventsForUser?uid=${uid}`, {
       method:'GET',
       headers:{
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      },
-      body:JSON.stringify(uid)
+      }
     })
 
     .then(response => {
@@ -107,12 +134,13 @@
     })
 
     .then(data => {
-      //  console.log(data);
+      console.log(data);
       let mesg_id = 0;
-      for (const baby of data){
-        let temp = addEvent(baby.eid , baby.eventName, baby.startDate , baby.endDate, mesg_id + 1);
+      for (const event of data.eventsForUser){
+        let temp = addEvent(event.eid , event.eventName, event.startDate , event.endDate, mesg_id + 1);
         event_container.append(temp);
       }
+
       graphics_containerID.style = 'display:none';
       event_container.style = 'display: flex';
     })
@@ -141,7 +169,7 @@
     vote_btn.setAttribute('id' , id)
     vote_btn.setAttribute("onclick" , ` sessionStorage.setItem('cid',  this.id);
                                         const vote_message = document.getElementById('vote__message');
-                                        vote_message.innerHTML = 'You  have  Vote!' `)
+                                        vote_message.innerHTML = 'Your vote has been cast!'`)
     vote_btn.innerHTML = "vote";
     
     vote_card.classList.add('vote__card')
@@ -159,7 +187,7 @@
     exist_vote.addEventListener('click', () => {
       vote_display.style = "display: none";
       can_box.innerHTML ='';
-      vote__message.innerHTML=""
+      vote__message.innerHTML="";
       
       const voteDetails = {
         eid : window.sessionStorage.getItem('eid'),
@@ -183,40 +211,6 @@
         console.log(data)
       })
 
-      // console.log('results');
-      // results.push(window.sessionStorage.getItem('vote'))
-      // window.sessionStorage.clear();
-      // console.log(results)
-      
-    })
-  }
-
-  async function loadCandidates(){
-    const eventDetails = {
-      ID : window.sessionStorage.getItem('userID'),
-      EID : window.sessionStorage.getItem('eid')
-    }
-    await fetch(localhost_addr + '/user/load_candidates' ,{
-      method:'GET',
-      headers:{
-        'Accept':'application/json',
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify(eventDetails)
-    })
-
-    .then(response => {
-      return response.json()
-    })
-
-    .then(data => {
-      console.log(data)
-      for (const child of candidatesArray){
-        let temp = addCandidate(child.name ,child.descriptiion, child.id)
-        can_box.append(temp)
-      }
-      loader_container.style = 'display : none';
-      vote_display.style ='display : block'
     })
   }
 
@@ -233,7 +227,7 @@
     }).observe(element);
   }
 
-  onVisible(loader_container, loadCandidates);
+  // onVisible(loader_container, loadCandidates);
 
   function onMonitor(element, callback) {
     new IntersectionObserver((entries, observer) => {
@@ -249,4 +243,3 @@
   onMonitor(graphics_containerID, loadEvents)
 
 })()
-

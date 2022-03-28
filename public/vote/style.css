@@ -419,4 +419,8 @@ body{
   .vote__col-1-4:not(:first-child){
     margin-top: 2rem;
   }
+
+  .eids{
+    display: none;
+  }
 }

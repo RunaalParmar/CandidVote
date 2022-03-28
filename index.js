@@ -54,6 +54,9 @@ app.use('/users', users);
 const events = require('./routes/events');
 app.use('/events', events);
 
+const votes = require('./routes/votes');
+app.use('/votes', votes);
+
 // SERVER LAUNCH
 app.listen(port, () => {
   console.log(`CandidVoTe app listening on port ${port}`);
