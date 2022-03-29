@@ -15,9 +15,7 @@ router.get('/loadEventsForUser', async (req, res, next) => {
   const userOrgName = userData.orgName;
 
   // Using orgName, find all events with same voter tag.
-  const eventsForUser = await Event.find({voterTag: "test2org"}); // TODO: this is bugged, it returns all events, not just where voterTag == orgName
-
-  console.log(eventsForUser);
+  const eventsForUser = await Event.find({votersTag: userOrgName});
 
   // send back events as list of objects.
   res.status(200).send({eventsForUser});
