@@ -204,3 +204,11 @@
                 width: 0;
             }
         }
+
+        #errorMessage {
+            align-items: center;
+            font-size: large;
+            justify-content: center;
+            display: none;
+            color: red;
+          }
