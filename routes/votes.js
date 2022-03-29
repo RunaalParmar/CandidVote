@@ -45,7 +45,10 @@ router.get('/loadCandidates', async (req, res, next) => {
 
 // Store the received vote on the blockchain.
 router.post('/storeVote', async (req, res, next) => {
-  res.status(200).send();
+  console.log(req.body.cid);
+  console.log(req.body.eid);
+
+  res.status(200).send({msg: "Received!"});
 });
 
 

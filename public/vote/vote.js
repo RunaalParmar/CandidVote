@@ -202,16 +202,17 @@
 
     const voteDetails = {cid, eid}
 
-    fetch(localhost_addr + '/vote/storeVote' ,{
+    fetch(localhost_addr + '/votes/storeVote', {
       method:'POST',
       headers:{
         'Accept':'application/json',
-        'Content-Type' : 'application/json'
+        'Content-Type':'application/json'
       },
       body:JSON.stringify(voteDetails)
     })
 
     .then(response => {
+      console.log(response); // TODO
       return response.json()
     })
 
