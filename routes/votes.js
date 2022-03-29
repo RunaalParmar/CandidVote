@@ -15,9 +15,7 @@ router.get('/loadEventsForUser', async (req, res, next) => {
   const userOrgName = userData.orgName;
 
   // Using orgName, find all events with same voter tag.
-  const eventsForUser = await Event.find({votersTag: "schoolElection"}); // TODO: this is bugged, it returns all events, not just where voterTag == orgName
-
-  console.log({eventsForUser});
+  const eventsForUser = await Event.find({votersTag: userOrgName});
 
   // send back events as list of objects.
   res.status(200).send({eventsForUser});
@@ -47,7 +45,10 @@ router.get('/loadCandidates', async (req, res, next) => {
 
 // Store the received vote on the blockchain.
 router.post('/storeVote', async (req, res, next) => {
-  res.status(200).send();
+  console.log(req.body.cid);
+  console.log(req.body.eid);
+
+  res.status(200).send({msg: "Received!"});
 });
 
 
