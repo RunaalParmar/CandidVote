@@ -64,9 +64,11 @@
 
     button.addEventListener("click", () => {
       let loader_container = document.getElementById('loader_container');
-      loader_container.style = 'display :block'; const closed_event_message = document.getElementById(mesg_id.toString());
-      closed_event_message.innerHTML = 'Your vote has been collected for this event, you can no longer vote';
+      loader_container.style = 'display :block';
       loadCandidates(eid);
+      const closed_event_message = document.getElementById(mesg_id.toString());
+      closed_event_message.innerHTML = 'Your vote has been collected for this event, you can no longer vote';
+      button.disabled = true;
     });
     
     button.innerHTML = "Start";
@@ -172,6 +174,9 @@
       const vote_message = document.getElementById('vote__message');
       vote_message.innerHTML = 'Your vote has been cast!';
       storeVote(cid, eid);
+      vote_display.style = "display: none";
+      can_box.innerHTML ='';
+      vote__message.innerHTML="";
     });
 
     vote_btn.innerHTML = "vote";
