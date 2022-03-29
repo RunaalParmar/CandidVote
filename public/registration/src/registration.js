@@ -51,7 +51,8 @@ registerForm.addEventListener('submit', (event) => {
         })
         .then(data => {
             if(resStatus === 403) {
-                document.getElementById('errorMessage').innerHTML = data.msg;
+                let errMsg = document.getElementById('errorMessage');
+                errMsg.style.display = "block";
             } else if(resStatus === 200) {
                 sessionStorage.setItem("uid", data.uid);
                 window.location.replace(data.url);
