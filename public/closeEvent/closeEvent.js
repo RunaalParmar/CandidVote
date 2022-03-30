@@ -2,6 +2,9 @@
   const event_container = document.getElementById('event_container');
   const graphics_containerID = document.getElementById('graphics_containerID')
 
+  const log_out = document.getElementById('log_out')
+  const navigation = document.getElementById('navigation')
+  
   const localhost_addr = 'http://localhost:5000';
   
   
@@ -133,6 +136,13 @@
     })
   }
   
+  navigation.addEventListener('click' , () =>{
+    window.location.replace("../adminDashboard/adminDashboard.html")
+  })
+  
+  log_out.addEventListener('click' , () =>{
+    window.location.replace("../signInSignUp/signInSignUp.html")
+  })
   
   function onMonitor(element, callback) {
     new IntersectionObserver((entries, observer) => {

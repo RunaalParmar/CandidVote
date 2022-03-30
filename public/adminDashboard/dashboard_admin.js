@@ -18,7 +18,7 @@
     });
 
     // Delete session storage and stored cookie and return to the sign in/up page.
-    const logOut = document.getElementById('logOut');
+    const logOut = document.getElementById('logout');
     logOut.addEventListener('click', () => {
         // Clear session storage.
         sessionStorage.clear();

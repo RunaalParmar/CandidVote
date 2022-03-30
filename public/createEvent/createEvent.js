@@ -6,9 +6,22 @@
   const candidateDescription = document.getElementById('candidateDescription');
   const candidates = document.getElementById('candidates')
   const eventForm = document.getElementById('eventForm')
-
+  const navigation = document.getElementById('navigation')
+  const log_out = document.getElementById('log_out')
   const local_addr = 'http://localhost:5000'
    
+  
+  
+  log_out.addEventListener('click' , () =>{
+    window.location.replace("../signInSignUp/signInSignUp.html")
+  })
+  
+  navigation.addEventListener('click' , () =>{
+    window.location.replace("../adminDashboard/dashboard_admin.html")
+  })
+  
+
+  
   function addCandidate(){
     let name = document.createElement('div');
     name.classList.add('main_div')
