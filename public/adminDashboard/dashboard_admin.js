@@ -1,23 +1,24 @@
-(function (params) {
+(function() {
     // Linking to the create events page.
-    const addEvent = document.getElementById('addEvent')
+    const addEvent = document.getElementById('addEvent');
     addEvent.addEventListener('click', ()=>{
-        window.location.replace("../createEvent/createEvent.html")
+        window.location.replace("../createEvent/createEvent.html");
     })
     
-    // Linking to view events page.
-    const viewEvent = document.getElementById('viewEvent')
+    // Linking to view/close events page.
+    const viewEvent = document.getElementById('viewEvent');
     viewEvent.addEventListener('click', () => {
-	    window.location.replace("../closeEvent/closeEvent.html")
+	    window.location.replace("../closeEvent/closeEvent.html");
     });
 
-    const viewResults = document.getElementById('viewResult')
+    // Linking to the view results page.
+    const viewResults = document.getElementById('viewResults');
     viewResults.addEventListener('click', () => {
-    	window.location.replace("") // TODO: change the html linking to view results page
+    	window.location.replace(""); // TODO: change the html linking to view results page
     });
 
     // Delete session storage and stored cookie and return to the sign in/up page.
-    const logOut = document.getElementById('logOut')
+    const logOut = document.getElementById('logOut');
     logOut.addEventListener('click', () => {
         // Clear session storage.
         sessionStorage.clear();
@@ -28,6 +29,6 @@
         });
 
         // Redirect to sign in/up page.
-    	window.location.replace("../signInSignUp/signInSignUp.html")
+    	window.location.replace("../signInSignUp/signInSignUp.html");
     });
-});
+})();
