@@ -83,9 +83,6 @@ body{
   display: flex;
   flex-direction: column;
   margin-top: 1.5rem;
-  
-  
-  
 }
 .card__date_item:not(:last-child){
   margin-right:3rem;
@@ -130,7 +127,7 @@ body{
   position: absolute;
   left: 0;
   top: 0;
-  background-color:#fff;
+  background-color:rgb(3, 165, 209);
   border-radius: 50rem;
   display: inline-block;
   z-index: -1;
