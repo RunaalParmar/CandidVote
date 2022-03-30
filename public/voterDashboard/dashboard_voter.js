@@ -2,7 +2,7 @@
     const addEvent = document.getElementById('voteNow');
     addEvent.addEventListener('click', ()=>{
         window.location.replace("../vote/vote.html");
-    })
+    });
     
     const logout = document.getElementById('out');
     logout.addEventListener('click', ()=>{
@@ -16,6 +16,6 @@
 
         // Redirect to sign in/up page.
         window.location.replace("../signInSignUp/signInSignUp.html");
-    })
+    });
 
-})()
+})();
