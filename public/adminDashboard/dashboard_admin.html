@@ -13,14 +13,16 @@
     <div id="mySidenav" class="sidenav">
       <p class="logo">CandidVoTe <span class="menu">☰</span></p>
       <p class="logo1"><span class="menu1">☰</span></p>
+      <!-- Add the url for Dashboard-->
       <a href="#" class="icon-a"
         ><i class="fa fa-dashboard icons"></i> Dashboard</a
       >
+      <!-- Add the url for Events view page-->
       <a href="#" class="icon-a"><i class="fa fa-list icons"></i> Events</a>
+      <!-- Add the url for Results view page-->
       <a href="#" class="icon-a"
         ><i class="fa fa-pie-chart icons"></i> Results</a
       >
-      <a href="#" class="icon-a"><i class="fa fa-users icons"></i> Voters</a>
     </div>
     <div id="main">
       <div class="head">
@@ -30,13 +32,11 @@
 
         <div class="col-div-6">
           <div class="profile">
-            <p>
-              <i class="fa fa-user-circle-o fa-2x dots" aria-hidden="true"></i>
-            </p>
-            <div class="profile-div">
-              <p><i class="fa fa-user"></i> Profile</p>
-              <p><i class="fa fa-sign-out"></i> Log Out</p>
-            </div>
+            <button
+              type="button"
+              class="fa fa-sign-out fa-2x out"
+              id="logOut"
+            ></button>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -49,7 +49,31 @@
         <div class="box-events">
           <p class="head-1">Create New Event</p>
           <p class="number">3</p>
-          <button type="button" class= "fa fa-plus-circle fa-3x plus" id="addEvent"></button>
+          <button
+            type="button"
+            class="fa fa-plus-circle fa-3x plus"
+            id="addEvent"
+          ></button>
+        </div>
+      </div>
+      <div class="col-div-4-1">
+        <div class="box-viewEvents">
+          <p class="head-1">View Events</p>
+          <button
+            type="button"
+            class="fa fa-calendar fa-3x calender"
+            id="viewEvent"
+          ></button>
+        </div>
+      </div>
+      <div class="col-div-4-1">
+        <div class="box-viewResults">
+          <p class="head-1">View Results</p>
+          <button
+            type="button"
+            class="fa fa-pie-chart fa-3x pie"
+            id="viewResults"
+          ></button>
         </div>
       </div>
       <div class="col-div-4-1">
@@ -136,9 +160,6 @@
       $(document).ready(function () {
         $(".profile p").click(function () {
           $(".profile-div").toggle();
-        });
-        $(".noti-icon").click(function () {
-          $(".notification-div").toggle();
         });
       });
     </script>

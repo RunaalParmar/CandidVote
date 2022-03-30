@@ -78,62 +78,19 @@ body {
   display: inline-block;
   float: right;
   width: 57px;
+  color: #000000;
 }
 
-.profile p,
-.profile dots {
-  color: #6c7293;
-  font-weight: 500;
-  margin-left: 35px;
-  margin-top: 10px;
-  font-size: 13.5px;
-  background-color: white;
-  padding: 10px;
-  border-radius: 25px;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-.profile-div {
-  background-color: white;
-  width: 140px;
-  border: 1px solid #ddd;
-  padding: 10px 0px;
-  right: 2%;
-  border-radius: 5px;
+.out {
+  border-radius: 10px;
+  margin-top: 10px !important;
+  padding: 15px;
+  color: rgb(44, 44, 44);
+  background-color: rgb(196, 196, 196);
   position: absolute;
-  z-index: 9;
-  display: none;
-}
-.profile-div:after {
-  content: "";
-  position: absolute;
-  height: 10px;
-  width: 10px;
-  background-color: white;
-  top: -6px;
-  border-left: 1px solid #ddd;
-  border-top: 1px solid #ddd;
-  transform: rotate(45deg);
-  right: 10%;
-}
-.profile-div p {
-  margin: 0px;
-  padding: 10px 20px;
-}
-.profile-div p:hover {
-  margin: 0px;
-  padding: 10px 20px;
-  background-color: rgb(16, 159, 199);
-  border-radius: 0px;
-  color: white;
-}
-
-.hr {
-  margin: 0px;
-  border: none;
-  background-color: #ddd;
-  height: 1px;
+  right: 16px;
+  top: 0px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .col-div-4-1 {
@@ -155,7 +112,22 @@ body {
   box-shadow: 2px 5px 10px #ddd;
   position: relative;
 }
-.box-votes {
+.box-viewEvents {
+  width: 92%;
+  height: 130px;
+  background-image: linear-gradient(
+    0deg,
+    rgb(156, 203, 247),
+    rgb(29, 148, 245)
+  );
+  border-radius: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-shadow: 2px 5px 10px #ddd;
+  position: relative;
+}
+.box-viewResults {
   width: 92%;
   height: 130px;
   background-image: linear-gradient(0deg, rgb(108, 224, 137), rgb(117, 189, 2));
@@ -166,7 +138,20 @@ body {
   box-shadow: 2px 5px 10px #ddd;
   position: relative;
 }
+.box-votes {
+  width: 92%;
+  height: 130px;
+  background-image: linear-gradient(0deg, rgb(230, 139, 139), rgb(197, 85, 57));
+  border-radius: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-shadow: 2px 5px 10px #ddd;
+  position: relative;
+}
 .box-events p,
+.box-viewResults p,
+.box-viewEvents p,
 .box-votes p {
   color: #eeeeee;
   font-weight: 500;
@@ -256,13 +241,35 @@ body {
   top: 0px;
   box-shadow: 0 14px 14px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.1);
 }
+.calender {
+  border-radius: 10px;
+  margin-top: 35px !important;
+  padding: 15px;
+  color: rgb(34, 163, 238);
+  background-color: rgb(170, 213, 248);
+  position: absolute;
+  right: 16px;
+  top: 0px;
+  box-shadow: 0 14px 14px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+.pie {
+  border-radius: 10px;
+  margin-top: 35px !important;
+  padding: 15px;
+  color: rgb(109, 238, 34);
+  background-color: rgb(186, 248, 170);
+  position: absolute;
+  right: 16px;
+  top: 0px;
+  box-shadow: 0 14px 14px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.1);
+}
 
 .refresh {
   border-radius: 10px;
   margin-top: 35px !important;
   padding: 15px;
-  color: rgb(53, 221, 95);
-  background-color: rgb(197, 243, 170);
+  color: rgb(221, 53, 53);
+  background-color: rgb(243, 170, 170);
   position: absolute;
   right: 16px;
   top: 0px;
@@ -271,7 +278,7 @@ body {
 
 button {
   border: 1px solid #ffffff;
-  color: #ffffff;
+  color: #000000;
 }
 button:active {
   transform: scale(0.95);
@@ -300,9 +307,6 @@ button .act-p {
 
 .content-box-1 {
   padding: 0px 10px;
-}
-.col-div-12 {
-  width: 100%;
 }
 
 .col-div-4 {
