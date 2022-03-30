@@ -32,6 +32,11 @@ const eventModel = new mongoose.Schema({
         type: Array,
         default: [],
         required: true,
+    },
+    isClosed: {
+        type: Boolean,
+        default: false,
+        required: true,
     }
 });
 

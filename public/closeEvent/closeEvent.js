@@ -1,9 +1,7 @@
 (function(){
   const event_container = document.getElementById('event_container');
   
-  
-  
-  
+
   function addEvent(eid, eventName, startDate , endDate, mesg_id) {
     const name = document.createElement('div');
     const DateLabelOne = document.createElement('label');
@@ -76,8 +74,7 @@
         const closed_event_message = document.getElementById(mesg_id.toString());
         closed_event_message.innerHTML = 'Closed';
       })
-    
-});
+    });
     
     button.innerHTML = "Close";
     
@@ -101,6 +98,7 @@
     
     return column;
   }
+
 
   async function loadEvents() {
     // Get user's ID from session storage.
@@ -133,7 +131,6 @@
   }
   
   
-  
   function onMonitor(element, callback) {
     new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
@@ -145,6 +142,7 @@
     }).observe(element);
   }
  
+
   onMonitor(graphics_containerID, loadEvents)
   
 })()

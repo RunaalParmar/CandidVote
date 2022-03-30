@@ -6,7 +6,7 @@ const {Candidate} = require('../models/candidates');
 const router = express.Router();
 
 
-// Load the event data for all events that a given user is eligible for.
+// Load the event data for all open events that a given user is eligible for.
 router.get('/loadEventsForUser', async (req, res, next) => {
   const uid = req.query.uid;
 
@@ -14,10 +14,10 @@ router.get('/loadEventsForUser', async (req, res, next) => {
   const userData = await User.findOne({uid: uid});
   const userOrgName = userData.orgName;
 
-  // Using orgName, find all events with same voter tag.
-  const eventsForUser = await Event.find({votersTag: userOrgName});
+  // Using orgName, find all open events with same voter tag.
+  const eventsForUser = await Event.find({votersTag: userOrgName, isClosed: false});
 
-  // send back events as list of objects.
+  // Send back open events as list of objects.
   res.status(200).send({eventsForUser});
 });
 
