@@ -37,12 +37,12 @@ function initPassport(app) {
 	passport.use(strategy);
 
 	passport.serializeUser((user, done) => {
-		console.log("serializing ", user)
+		console.log("serializing ")
 	    done(null, user.uid);
 	});
 
 	passport.deserializeUser((userId, done) => {
-		console.log("deserializing ", userId)
+		console.log("deserializing ")
 
 		User.findOne({uid: userId})
 	        .then((user) => {
