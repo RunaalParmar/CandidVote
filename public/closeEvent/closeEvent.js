@@ -1,5 +1,6 @@
 (function(){
   const event_container = document.getElementById('event_container');
+  const graphics_containerID = document.getElementById('graphics_containerID')
   
   
   
