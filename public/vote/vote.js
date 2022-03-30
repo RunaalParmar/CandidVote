@@ -86,7 +86,6 @@
       let loader_container = document.getElementById('loader_container');
       loader_container.style = 'display :block';
 
-
       if(!(hasVoted)) {
         loadCandidates(eid);
       }
@@ -149,7 +148,7 @@
       let mesg_id = 0;
       for (const event of data.eventsForUser){
         let hasVoted = event.voterUIDs.includes(uid);
-        let temp = addEvent(event.eid , event.eventName, event.startDate , event.endDate, hasVoted, mesg_id);
+        let temp = addEvent(event.eid , event.eventName, event.startDate, event.endDate, hasVoted, mesg_id);
         event_container.append(temp);
         mesg_id = mesg_id + 1;
       }
