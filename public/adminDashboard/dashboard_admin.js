@@ -24,11 +24,31 @@
         sessionStorage.clear();
 
         // Delete residual cookies. // TODO: Fix deletion of cookie.
-        document.cookie.split(";").forEach(function(c) {
-            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-        });
+        // document.cookie.split(";").forEach(function(c) {
+        //     document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        // });
+        
+        deleteCookie('connect.sid', '/', 'localhost'); // TODO
 
         // Redirect to sign in/up page.
     	window.location.replace("../signInSignUp/signInSignUp.html");
     });
 })();
+
+
+const getCookie = (name) => {
+    return document.cookie.split(';').some(c => {
+        let cookieName = c.trim().startsWith(name + '=');
+        console.log(cookieName);
+        return cookieName;
+    });
+}
+
+const deleteCookie = (name, path, domain) => {
+    if (getCookie(name)) {
+        document.cookie = name + "=" +
+            ((path) ? ";path=" + path : "") +
+            ((domain) ? ";domain=" + domain : "") +
+            ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+    }
+}
