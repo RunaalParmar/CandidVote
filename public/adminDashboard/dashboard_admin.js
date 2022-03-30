@@ -23,7 +23,7 @@
         // Clear session storage.
         sessionStorage.clear();
 
-        // Delete residual cookies.
+        // Delete residual cookies. // TODO: Fix deletion of cookie.
         document.cookie.split(";").forEach(function(c) {
             document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
         });

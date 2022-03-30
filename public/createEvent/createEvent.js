@@ -11,15 +11,22 @@
   const local_addr = 'http://localhost:5000'
    
   
-  
   log_out.addEventListener('click' , () =>{
-    window.location.replace("../signInSignUp/signInSignUp.html")
-  })
+    // Clear session storage.
+    sessionStorage.clear();
+
+    // Delete residual cookies. // TODO: Fix deletion of cookie.
+    document.cookie.split(";").forEach(function(c) {
+    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+    
+    // Redirect to sign in/up page.
+    window.location.replace("../signInSignUp/signInSignUp.html");
+  });
   
   navigation.addEventListener('click' , () =>{
     window.location.replace("../adminDashboard/dashboard_admin.html")
-  })
-  
+  });
 
   
   function addCandidate(){
@@ -178,4 +185,4 @@
       
     })
 
-})()
+})();

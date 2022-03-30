@@ -1,11 +1,21 @@
 (function (params) {
-    const addEvent = document.getElementById('voteNow')
-    const  logout =   document.getElementById('out')
+    const addEvent = document.getElementById('voteNow');
     addEvent.addEventListener('click', ()=>{
-        window.location.replace("../vote/vote.html")
+        window.location.replace("../vote/vote.html");
     })
     
+    const logout = document.getElementById('out');
     logout.addEventListener('click', ()=>{
-        window.location.replace("../signInSignUp/signInSignUp.html")
+        // Clear session storage.
+        sessionStorage.clear();
+
+        // Delete residual cookies. // TODO: Fix deletion of cookie.
+        document.cookie.split(";").forEach(function(c) {
+            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        });
+
+        // Redirect to sign in/up page.
+        window.location.replace("../signInSignUp/signInSignUp.html");
     })
+
 })()
