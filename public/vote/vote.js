@@ -8,7 +8,20 @@
   const can_box = document.getElementById('can_box')
   const vote__message = document.getElementById('vote__message')
   const graphics_containerID = document.getElementById('graphics_containerID')
+  const  navigation = document.getElementById('navigation')
+  const  log_out = document.getElementById('log_out')
   const localhost_addr = 'http://localhost:5000';
+  
+  
+  navigation.addEventListener('click' , () =>{
+    window.location.replace("../voterDashboard/dashboard_voter.html")
+  })
+  
+  log_out.addEventListener('click' , () =>{
+    window.location.replace("../signInSignUp/signInSignUp.html")
+  })
+  
+  
   
   const results = [];
 

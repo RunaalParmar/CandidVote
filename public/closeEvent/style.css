@@ -20,6 +20,52 @@ body{
   position: relative;
 }
 
+.nav{
+  position : fixed;
+  left : 0;
+  top:0;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.nav__nav-box{
+  position : relative;
+  width:100%;
+  height:100%;
+  background-color:  rgba(255, 255, 255, .7);
+  padding: 1rem  4rem;
+  display: flex;
+  justify-content: space-between;
+}
+.nav__logo-box {
+  font-size: 2.7rem;
+  display: inline-block;
+  background-image: linear-gradient(to right, rgb(160, 222, 219), rgb(3, 165, 209));
+  color:transparent;
+  -webkit-background-clip: text;
+  cursor: pointer;
+}
+
+.nav__logout{
+  font-size: 1.5rem;
+  color: rgb(3, 165, 209);
+  border-bottom: .1rem solid rgb(3, 165, 209);
+  padding: .5rem .3rem ;
+  /* border-radius: .3rem; */
+  cursor: pointer;
+  
+}
+.logout_text{
+  text-transform: lowercase;
+}
+.nav__logout:hover{
+  color: #fff;
+  background-color:rgb(3, 165, 209) ;
+}
+
+
+
+
 .row{
   max-width: 114rem;
   width: 100%;
