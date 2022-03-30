@@ -62,6 +62,7 @@ router.post('/saveEvent', async (req, res, next) => {
     endDate: req.body.endDate,
     description: req.body.eventDescription,
     candidateIDs: cids,
+    voterUIDs: new Array(),
     isClosed: false,
   });
 

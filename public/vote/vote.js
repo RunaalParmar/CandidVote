@@ -33,7 +33,7 @@
   
   const results = [];
 
-  function addEvent(eid, eventName, startDate , endDate, mesg_id) {
+  function addEvent(eid, eventName, startDate , endDate, hasVoted, mesg_id) {
     const name = document.createElement('div');
     const DateLabelOne = document.createElement('label');
     const DateLabelTwo = document.createElement('label');
@@ -48,8 +48,7 @@
     const details = document.createElement('div');
     const card = document.createElement('div');
     const column = document.createElement('div');
-    
-    
+
     name.classList.add('card__event-name');
     name.innerHTML = eventName;
     
@@ -86,17 +85,31 @@
     button.addEventListener("click", () => {
       let loader_container = document.getElementById('loader_container');
       loader_container.style = 'display :block';
-      loadCandidates(eid);
+
+
+      if(!(hasVoted)) {
+        loadCandidates(eid);
+      }
+
       const closed_event_message = document.getElementById(mesg_id.toString());
       closed_event_message.innerHTML = 'Your vote has been collected for this event, you can no longer vote';
       button.disabled = true;
     });
-    
+
     button.innerHTML = "Start";
-    
-    endedVote.classList.add('card__btn_disabled');
-    endedVote.setAttribute('id', `${mesg_id.toString()}`);
-    
+
+
+    if(hasVoted){
+      button.disabled = true;
+      endedVote.classList.add('card__btn_disabled');
+      endedVote.setAttribute('id', `${mesg_id.toString()}`);
+      endedVote.style = 'display:block';
+      endedVote.innerHTML = 'Your vote has been collected for this event, you can no longer vote';
+    } else {
+      endedVote.classList.add('card__btn_disabled');
+      endedVote.setAttribute('id', `${mesg_id.toString()}`);
+    }
+
     box.classList.add('card__event_box');
     box.appendChild(name);
     box.appendChild(description);
@@ -111,7 +124,7 @@
     
     column.classList.add('col-1-3');
     column.appendChild(card);
-    
+
     return column;
   }
   
@@ -135,7 +148,8 @@
       console.log(data);
       let mesg_id = 0;
       for (const event of data.eventsForUser){
-        let temp = addEvent(event.eid , event.eventName, event.startDate , event.endDate, mesg_id);
+        let hasVoted = event.voterUIDs.includes(uid);
+        let temp = addEvent(event.eid , event.eventName, event.startDate , event.endDate, hasVoted, mesg_id);
         event_container.append(temp);
         mesg_id = mesg_id + 1;
       }
@@ -213,6 +227,9 @@
   }
   
   async function storeVote(cid, eid) {
+    // Get user's ID from session storage.
+    const uid = window.sessionStorage.getItem('uid');
+
     if(exist_vote) {
       exist_vote.addEventListener('click', () => {
         vote_display.style = "display: none";
@@ -221,7 +238,7 @@
       })
     }
 
-    const voteDetails = {cid, eid}
+    const voteDetails = {cid, eid, uid}
 
     fetch(localhost_addr + '/votes/storeVote', {
       method:'POST',

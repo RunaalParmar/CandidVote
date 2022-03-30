@@ -33,6 +33,11 @@ const eventModel = new mongoose.Schema({
         default: [],
         required: true,
     },
+    voterUIDs: { // An array of strings (UIDs) representing the users who have voted for this event.
+        type: Array,
+        default: [],
+        required: true,
+    },
     isClosed: {
         type: Boolean,
         default: false,

@@ -26,7 +26,7 @@ router.get('/loadEventsForUser', async (req, res, next) => {
 router.get('/loadCandidates', async (req, res, next) => {
   const eid = req.query.eid;
 
-  // Get event data for the given ID.
+  // Get event data for the given EID.
   const eventData = await Event.findOne({eid: eid});
 
   // Retrieve the list of cids from the event data.
@@ -63,8 +63,21 @@ router.post('/closeEvent', async (req, res, next) => {
 
 // Store the received vote on the blockchain.
 router.post('/storeVote', async (req, res, next) => {
-  console.log(req.body.cid);
-  console.log(req.body.eid);
+  cid = req.body.cid;
+  eid = req.body.eid;
+  uid = req.body.uid;
+
+  console.log(cid);
+  console.log(eid);
+  console.log(uid);
+  
+  // Using the eid, retrieve the event's data and add the uid to the voterUIDs array.
+  let modEvent = await Event.findOne({eid: eid});
+  await Event.findOneAndUpdate({eid: eid}, {"$push": {"voterUIDs": uid}});
+  modEvent = await Event.findOne({eid: eid});
+  console.log(modEvent); // TODO
+
+  // TODO: Blockchain magic to store the vote as its cid and eid.
 
   res.status(200).send({msg: "Received!"});
 });
