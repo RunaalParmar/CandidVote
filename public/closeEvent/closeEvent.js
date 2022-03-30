@@ -1,7 +1,10 @@
 (function(){
   const event_container = document.getElementById('event_container');
-  
+  const graphics_containerID = document.getElementById('graphics_containerID')
 
+  const localhost_addr = 'http://localhost:5000';
+  
+  
   function addEvent(eid, eventName, startDate , endDate, mesg_id) {
     const name = document.createElement('div');
     const DateLabelOne = document.createElement('label');
