@@ -43,6 +43,24 @@ router.get('/loadCandidates', async (req, res, next) => {
 });
 
 
+// Set the voting for an event to be closed.
+router.post('/closeEvent', async (req, res, next) => {
+  const eid = req.body.eid;
+
+  // Using the eid, retrieve the event's data and set it to be closed.
+  await Event.findOneAndUpdate({eid: eid}, {isClosed: true});
+  const modEvent = await Event.findOne({eid: eid});
+  console.log(modEvent);
+
+  // TODO: Blockchain magic to tally winner and vote counts for the newly closed event.
+
+  // TODO: Store data for newly closed event on mongoDB under the "results" collection.
+
+  // Send back a status to indicate success.
+  res.status(200).send({msg: "Event closed for voting. Check view results page for details."});
+});
+
+
 // Store the received vote on the blockchain.
 router.post('/storeVote', async (req, res, next) => {
   console.log(req.body.cid);
