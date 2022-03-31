@@ -14,7 +14,7 @@
     // Linking to the view results page.
     const viewResults = document.getElementById('viewResults');
     viewResults.addEventListener('click', () => {
-    	window.location.replace(""); // TODO: change the html linking to view results page
+    	window.location.replace("../viewResults/viewResults.html");
     });
 
     // Delete session storage and stored cookie and return to the sign in/up page.
