@@ -19,7 +19,7 @@ const localhost_addr = "http://localhost:";
 
 const mongoURL = "mongodb+srv://r3parmar:CandidVoTePWD@candidvote.wxjmp.mongodb.net/CandidVoTeDB?retryWrites=true&w=majority";
 
-
+const mongoURL_loc = "mongodb://localhost:27017/sampleDatabase";
 // Block chain connection
 if (typeof web3 !== 'undefined') {
     var web3 = new Web3(web3.currentProvider); 

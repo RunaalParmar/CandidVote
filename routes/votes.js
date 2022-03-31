@@ -70,24 +70,29 @@ router.post('/closeEvent', async (req, res, next) => {
   console.log(modEvent);
 
   // TODO: Blockchain magic to tally winner and vote counts for the newly closed event.
-        const event = eid;
+        const event = Number(eid);
         let cache = [];
         const ctr = await lme.voteCount()
         console.log("vote counts: "+ ctr.toNumber())
         const ctr1 = ctr.toNumber()  
-
+        console.log("the event Id recieved from backend: " + event);
+        var votes_dict = {};
         for (let i = 1; i <= ctr1; i++) {
             const votes = await lme.tasks(i)
-            console.log("#########the votes are ###########")
+            //console.log("#########the votes are ###########")
             const votes_temp = JSON.stringify(votes)
             const votes_json = JSON.parse(votes_temp)
             // console.log(votes_json)
             // console.log(typeof(votes_json.eventId))
             var dec_eventId = converter.hexToDec(votes_json.eventId);
             var votes_event = converter.hexToDec(votes_json.vote);
-            var num = Number(votes_event)
+            var num = Number(votes_event);
+            var eve = Number(dec_eventId);
+            console.log("eventId: "+ eve + "    "+ " candidate ID: "+ num);
+            
             if(event == dec_eventId){
-                if(votes_event in votes_dict){
+
+                if(num in votes_dict){
                     console.log("111")
                     votes_dict[num] += 1;
                 }
@@ -114,11 +119,14 @@ router.post('/storeVote', async (req, res, next) => {
   eid = req.body.eid;
   uid = req.body.uid;
 
-  console.log(cid);
+
+  console.log("The cid is    "+cid);
   console.log(eid);
   console.log(uid);
   const accounts = await web3.eth.getAccounts();
   const lme = await LMS.deployed();
+
+  console.log("the account is : "+ accounts[0]);
   
   // Using the eid, retrieve the event's data and add the uid to the voterUIDs array.
   let modEvent = await Event.findOne({eid: eid});
@@ -127,7 +135,7 @@ router.post('/storeVote', async (req, res, next) => {
   console.log(modEvent); // TODO
 
   // TODO: Blockchain magic to store the vote as its cid and eid.
-  const eventID = eid;
+        const eventID = eid;
         const voteID = cid;
         const ctr = await lme.voteCount()
         console.log("vote counts: "+ ctr.toNumber())
