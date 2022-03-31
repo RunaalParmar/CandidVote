@@ -1,9 +1,9 @@
 (function(){
-  const event_container = document.getElementById('event_container')
-  const graphics_containerID = document.getElementById('graphics_containerID')``
+  const event_container = document.getElementById('event_container');
+  const graphics_containerID = document.getElementById('graphics_containerID');
   
   
-  const result = (eventName , startDate , endDate , candidateName , candidateVotes) => {
+  const result = (eventName, startDate, endDate, candidateName, candidateVotes) => {
     const name = document.createElement('div');
     const DateLabelOne = document.createElement('label');
     const DateLabelTwo = document.createElement('label');
@@ -82,6 +82,5 @@
     column.appendChild(card);
     
     return column;
-    
   }
-})()
+})();
