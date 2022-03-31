@@ -33,9 +33,10 @@ LMS.setProvider(web3.currentProvider)
 
 mongoose.connect(mongoURL).then(async() =>{
     // const db =client.db('Cluster0')
-    // const accounts = await web3.eth.getAccounts();
-    // const lms = await LMS.deployed();
-    // routes(app, db, accounts, lms);
+    const accounts = await web3.eth.getAccounts();
+    const lms = await LMS.deployed();
+    console.log("###### all the blockchain object created ########")
+    //routes(app, db = null, accounts, lms);
 
     // MIDDLEWARE
     app.options("*", cors({ origin: localhost_addr + port, optionsSuccessStatus: 200 }));

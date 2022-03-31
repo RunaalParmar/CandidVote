@@ -2,6 +2,10 @@
 //const { restart } = require('nodemon');
 const shortid = require('short-id')
 var converter = require('hex2dec');
+const Web3 = require('web3');
+const artifacts = require('../build/contracts/Vote.json');
+const contract = require('@truffle/contract');
+
 function routes(app, dbe , accounts, lme){
 
     app.get('/' ,(req , res) =>{
