@@ -10,15 +10,14 @@ var converter = require('hex2dec');
 const router = express.Router();
 
 
-    if (typeof web3 !== 'undefined') {
-      var web3 = new Web3(web3.currentProvider); 
-  } else {
-      var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:7545'));
-      console.log("########### web3 object created in vote route ################")
-  }
-  const LMS = contract(artifacts)
-  LMS.setProvider(web3.currentProvider)
-  
+if (typeof web3 !== 'undefined') {
+  var web3 = new Web3(web3.currentProvider); 
+} else {
+  var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:7545'));
+  console.log("########### web3 object created in vote route #############")
+}
+const LMS = contract(artifacts)
+LMS.setProvider(web3.currentProvider)
 
 
 // Load the event data for all open events that a given user is eligible for.
@@ -69,42 +68,37 @@ router.post('/closeEvent', async (req, res, next) => {
   const modEvent = await Event.findOne({eid: eid});
   console.log(modEvent);
 
-  // TODO: Blockchain magic to tally winner and vote counts for the newly closed event.
-        const event = Number(eid);
-        let cache = [];
-        const ctr = await lme.voteCount()
-        console.log("vote counts: "+ ctr.toNumber())
-        const ctr1 = ctr.toNumber()  
-        console.log("the event Id recieved from backend: " + event);
-        var votes_dict = {};
-        for (let i = 1; i <= ctr1; i++) {
-            const votes = await lme.tasks(i)
-            //console.log("#########the votes are ###########")
-            const votes_temp = JSON.stringify(votes)
-            const votes_json = JSON.parse(votes_temp)
-            // console.log(votes_json)
-            // console.log(typeof(votes_json.eventId))
-            var dec_eventId = converter.hexToDec(votes_json.eventId);
-            var votes_event = converter.hexToDec(votes_json.vote);
-            var num = Number(votes_event);
-            var eve = Number(dec_eventId);
-            console.log("eventId: "+ eve + "    "+ " candidate ID: "+ num);
-            
-            if(event == dec_eventId){
+  // Blockchain magic to tally winner and vote counts for the newly closed event.
+  const event = Number(eid);
+  let cache = [];
+  const ctr = await lme.voteCount()
+  console.log("vote counts: "+ ctr.toNumber())
+  const ctr1 = ctr.toNumber()  
+  console.log("the event Id recieved from backend: " + event);
 
-                if(num in votes_dict){
-                    console.log("111")
-                    votes_dict[num] += 1;
-                }
-                else{
-                    console.log("121")
-                    votes_dict[num] = 1
-                }
-            }
-            console.log("####################################")
-            cache = [...cache, votes];
-        }
-        console.log(votes_dict)
+  var votes_dict = {};
+  for (let i = 1; i <= ctr1; i++) {
+    const votes = await lme.tasks(i);
+    const votes_temp = JSON.stringify(votes);
+    const votes_json = JSON.parse(votes_temp);
+
+    var dec_eventId = converter.hexToDec(votes_json.eventId);
+    var votes_event = converter.hexToDec(votes_json.vote);
+    var num = Number(votes_event);
+    var eve = Number(dec_eventId);
+    console.log("eventId: "+ eve + "    "+ " candidate ID: "+ num);
+    
+    if(event == dec_eventId) {
+      if(num in votes_dict) {
+        votes_dict[num] += 1;
+      } else {
+        votes_dict[num] = 1
+      }
+    }
+    console.log("####################################")
+    cache = [...cache, votes];
+  }
+  console.log(votes_dict)
 
   // TODO: Store data for newly closed event on mongoDB under the "results" collection.
 
@@ -119,10 +113,10 @@ router.post('/storeVote', async (req, res, next) => {
   eid = req.body.eid;
   uid = req.body.uid;
 
-
-  console.log("The cid is    "+cid);
+  console.log(cid);
   console.log(eid);
   console.log(uid);
+
   const accounts = await web3.eth.getAccounts();
   const lme = await LMS.deployed();
 
@@ -134,14 +128,11 @@ router.post('/storeVote', async (req, res, next) => {
   modEvent = await Event.findOne({eid: eid});
   console.log(modEvent); // TODO
 
-  // TODO: Blockchain magic to store the vote as its cid and eid.
-        const eventID = eid;
-        const voteID = cid;
-        const ctr = await lme.voteCount()
-        console.log("vote counts: "+ ctr.toNumber())
-        const ctr1 = ctr.toNumber()
-        const cast = await lme.createVote(eventID , voteID, {from: accounts[0]} )
-        console.log(cast)
+  // Blockchain magic to store the vote as its cid and eid.
+  const ctr = await lme.voteCount();
+  console.log("vote counts: " + ctr.toNumber());
+  const cast = await lme.createVote(eid, cid, {from: accounts[0]});
+  console.log(cast);
 
   res.status(200).send({msg: "Received!"});
 });
