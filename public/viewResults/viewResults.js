@@ -2,8 +2,8 @@
   const event_container = document.getElementById('event_container');
   const graphics_containerID = document.getElementById('graphics_containerID');
   
-  
-  const result = (eventName, startDate, endDate, candidateName, candidateVotes) => {
+
+  const addResult = (eventName , startDate , endDate , candidateName , candidateVotes) => {
     const name = document.createElement('div');
     const DateLabelOne = document.createElement('label');
     const DateLabelTwo = document.createElement('label');
@@ -83,4 +83,48 @@
     
     return column;
   }
+  
+  async function loadResult() {
+    // Get user's ID from session storage.
+    const uid = window.sessionStorage.getItem('uid');
+
+    await fetch(localhost_addr + `/votes/loadResultsForUser?uid=${uid}`, {
+      method:'GET',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+
+    .then(response => {
+      return response.json();
+    })
+
+    .then(data => {
+      console.log(data);
+      let mesg_id = 0;
+      for (const event of data.eventsForUser){
+        let temp = addResult(event.eventName, event.startDate , event.endDate, event.candidateName , event.candidateVotes, mesg_id);
+        event_container.append(temp);
+        mesg_id = mesg_id + 1;
+      }
+      graphics_containerID.style = 'display:none';
+      event_container.style = 'display: flex';
+    })
+  }
+  
+  
+  function onMonitor(element, callback) {
+    new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.intersectionRatio > 0) {
+          callback(element);
+          observer.disconnect();
+        }
+      });
+    }).observe(element);
+  }
+ 
+  onMonitor(graphics_containerID, loadResult)
+  
 })();
