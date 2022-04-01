@@ -5,7 +5,6 @@ const routes = require('./routes/voters_routes')
 const Web3 = require('web3');
 const passport = require('passport');
 const mongodb = require('mongodb').MongoClient
-//const {MongoClient} = require('mongodb');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const artifacts = require('./build/contracts/Vote.json');
@@ -19,23 +18,21 @@ const localhost_addr = "http://localhost:";
 
 const mongoURL = "mongodb+srv://r3parmar:CandidVoTePWD@candidvote.wxjmp.mongodb.net/CandidVoTeDB?retryWrites=true&w=majority";
 
-
 // Block chain connection
 if (typeof web3 !== 'undefined') {
     var web3 = new Web3(web3.currentProvider); 
 } else {
     var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:7545'));
-    console.log("########### web3 object created ################")
+    console.log("########### web3 object created ###########");
 }
-const LMS = contract(artifacts)
-LMS.setProvider(web3.currentProvider)
+const LMS = contract(artifacts);
+LMS.setProvider(web3.currentProvider);
 
 
 mongoose.connect(mongoURL).then(async() =>{
-    // const db =client.db('Cluster0')
-    // const accounts = await web3.eth.getAccounts();
-    // const lms = await LMS.deployed();
-    // routes(app, db, accounts, lms);
+    const accounts = await web3.eth.getAccounts();
+    const lms = await LMS.deployed();
+    console.log("###### all the blockchain object created ########")
 
     // MIDDLEWARE
     app.options("*", cors({ origin: localhost_addr + port, optionsSuccessStatus: 200 }));
@@ -71,7 +68,5 @@ mongoose.connect(mongoURL).then(async() =>{
     // SERVER LAUNCH
     app.listen(process.env.PORT || port, () => {
         console.log('Listening on port '+ (port));
-        //console.log(accounts)
      })
-
 });
