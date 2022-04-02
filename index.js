@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const routes = require('./routes/voters_routes')
 const Web3 = require('web3');
 const passport = require('passport');
 const mongodb = require('mongodb').MongoClient

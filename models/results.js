@@ -1,6 +1,5 @@
 // Basic schema definition for the results collection in the database.
 
-const { Int32 } = require('mongodb');
 const mongoose = require('mongoose');
 
 // Schema object to define all attributes and related propreties.
@@ -18,7 +17,7 @@ const resultModel = new mongoose.Schema({
         required: true,
     },
     candidateVotes: {
-        type: Int32,
+        type: Number,
         required: true,
     },
     eventName: {
@@ -38,5 +37,5 @@ const resultModel = new mongoose.Schema({
 // This model connects the collection and the schema.
 // If the collection has not yet been created, this will create one.
 module.exports = {
-    Event: mongoose.model('results', resultModel)
+    Result: mongoose.model('results', resultModel)
 };

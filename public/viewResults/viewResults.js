@@ -87,6 +87,7 @@
   async function loadResult() {
     // Get user's ID from session storage.
     const uid = window.sessionStorage.getItem('uid');
+    console.log("Loading results for user: " + uid);
 
     await fetch(localhost_addr + `/votes/loadResultsForUser?uid=${uid}`, {
       method:'GET',
@@ -113,7 +114,7 @@
     })
   }
   
-  
+
   function onMonitor(element, callback) {
     new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {

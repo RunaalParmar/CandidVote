@@ -60,6 +60,8 @@ router.get('/loadCandidates', async (req, res, next) => {
 
 // Load the event data for all closed events that a given user is authorized to view.
 router.get('/loadResultsForUser', async (req, res, next) => {
+  console.log("Loading results for user.");
+
   const uid = req.query.uid;
 
   // Using uid, get the user's orgName.
@@ -135,10 +137,12 @@ router.post('/closeEvent', async (req, res, next) => {
       winnerTally = value;
     }
   }
+  console.log("Winner CID : " + winnerCID + "    " + "Winner tally: "+ winnerTally);
 
   // Determine the winning candidate's name.
   const candData = await Candidate.findOne({cid: winnerCID});
-  const candName = candData.candidateName;
+  const candName = candData.fullName;
+  console.log("Winner name: " + candName);
 
   // Create new 'results' item.
   const newResult = new Result({
