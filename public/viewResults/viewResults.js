@@ -2,6 +2,7 @@
   const event_container = document.getElementById('event_container');
   const graphics_containerID = document.getElementById('graphics_containerID');
   
+  const localhost_addr = 'http://localhost:5000';
 
   const addResult = (eventName , startDate , endDate , candidateName , candidateVotes) => {
     const name = document.createElement('div');
@@ -104,7 +105,7 @@
     .then(data => {
       console.log(data);
       let mesg_id = 0;
-      for (const event of data.eventsForUser){
+      for (const event of data.resultsForUser){
         let temp = addResult(event.eventName, event.startDate , event.endDate, event.candidateName , event.candidateVotes, mesg_id);
         event_container.append(temp);
         mesg_id = mesg_id + 1;
