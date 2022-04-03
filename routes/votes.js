@@ -80,8 +80,10 @@ router.get('/loadResultsForUser', async (req, res, next) => {
     resultsForUser.push(result);
   }
 
+  const results = {resultsForUser: resultsForUser, authLevel: userData.authLevel};
+
   // Send back open events as list of objects.
-  res.status(200).send({resultsForUser});
+  res.status(200).send(results);
 });
 
 

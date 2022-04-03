@@ -1,13 +1,22 @@
 (function(){
+  let authLevel = "";
+
   const event_container = document.getElementById('event_container');
   const graphics_containerID = document.getElementById('graphics_containerID');
   
   const localhost_addr = 'http://localhost:5000';
   
   navigation.addEventListener('click' , () =>{
-    window.location.replace("../voterDashboard/dashboard_voter.html")
+    if(authLevel === "admin" || authLevel === "superAdmin") {
+      window.location.replace("../adminDashboard/dashboard_admin.html");
+    } else if(authLevel === "user") {
+      window.location.replace("../voterDashboard/dashboard_voter.html");
+    } else {
+      window.location.replace("");
+    }
   })
-  
+
+  const log_out = document.getElementById('log_out');
   log_out.addEventListener('click' , () =>{
     // Clear session storage.
     sessionStorage.clear();
@@ -15,7 +24,10 @@
     // Delete residual cookies. // TODO: Fix deletion of cookie.
     document.cookie.split(";").forEach(function(c) {
       document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-    });
+    })
+
+    window.location.replace("../signInSignUp/signInSignUp.html");
+  });
 
   const addResult = (eventName , startDate , endDate , candidateName , candidateVotes) => {
     const name = document.createElement('div');
@@ -121,11 +133,15 @@
     .then(data => {
       console.log(data);
       let mesg_id = 0;
+
       for (const event of data.resultsForUser){
         let temp = addResult(event.eventName, event.startDate , event.endDate, event.candidateName , event.candidateVotes, mesg_id);
         event_container.append(temp);
         mesg_id = mesg_id + 1;
       }
+
+      authLevel = data.authLevel;
+
       graphics_containerID.style = 'display:none';
       event_container.style = 'display: flex';
     })
