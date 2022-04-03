@@ -1,7 +1,33 @@
 (function(){
+  let authLevel = "";
+
   const event_container = document.getElementById('event_container');
   const graphics_containerID = document.getElementById('graphics_containerID');
   
+  const localhost_addr = 'http://localhost:5000';
+  
+  navigation.addEventListener('click' , () =>{
+    if(authLevel === "admin" || authLevel === "superAdmin") {
+      window.location.replace("../adminDashboard/dashboard_admin.html");
+    } else if(authLevel === "user") {
+      window.location.replace("../voterDashboard/dashboard_voter.html");
+    } else {
+      window.location.replace("");
+    }
+  })
+
+  const log_out = document.getElementById('log_out');
+  log_out.addEventListener('click' , () =>{
+    // Clear session storage.
+    sessionStorage.clear();
+
+    // Delete residual cookies. // TODO: Fix deletion of cookie.
+    document.cookie.split(";").forEach(function(c) {
+      document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    })
+
+    window.location.replace("../signInSignUp/signInSignUp.html");
+  });
 
   const addResult = (eventName , startDate , endDate , candidateName , candidateVotes) => {
     const name = document.createElement('div');
@@ -27,6 +53,9 @@
     
     description.classList.add('card__event-description');
     
+    DateLabelOne.classList.add('card__date-label')
+    DateLabelOne.innerHTML = "Started On";
+    
     DateValueOne.classList.add('card__date_value');
     DateValueOne.innerHTML = startDate;
     
@@ -37,7 +66,7 @@
     
     
     DateLabelTwo.classList.add('card__date-label')
-    DateLabelTwo.innerHTML = "End Date";
+    DateLabelTwo.innerHTML = "Ended On";
     
     DateValueTwo.classList.add('card__date_value');
     DateValueTwo.innerHTML = endDate;
@@ -87,6 +116,7 @@
   async function loadResult() {
     // Get user's ID from session storage.
     const uid = window.sessionStorage.getItem('uid');
+    console.log("Loading results for user: " + uid);
 
     await fetch(localhost_addr + `/votes/loadResultsForUser?uid=${uid}`, {
       method:'GET',
@@ -103,17 +133,21 @@
     .then(data => {
       console.log(data);
       let mesg_id = 0;
-      for (const event of data.eventsForUser){
+
+      for (const event of data.resultsForUser){
         let temp = addResult(event.eventName, event.startDate , event.endDate, event.candidateName , event.candidateVotes, mesg_id);
         event_container.append(temp);
         mesg_id = mesg_id + 1;
       }
+
+      authLevel = data.authLevel;
+
       graphics_containerID.style = 'display:none';
       event_container.style = 'display: flex';
     })
   }
   
-  
+
   function onMonitor(element, callback) {
     new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {

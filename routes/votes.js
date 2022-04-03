@@ -3,6 +3,7 @@ const {model} = require('mongoose');
 const {User} = require('../models/users');
 const {Event} = require('../models/events');
 const {Candidate} = require('../models/candidates');
+const {Result} = require('../models/results');
 const artifacts = require('../build/contracts/Vote.json');
 const contract = require('@truffle/contract');
 const Web3 = require('web3');
@@ -57,6 +58,35 @@ router.get('/loadCandidates', async (req, res, next) => {
 });
 
 
+// Load the event data for all closed events that a given user is authorized to view.
+router.get('/loadResultsForUser', async (req, res, next) => {
+  console.log("Loading results for user.");
+
+  const uid = req.query.uid;
+
+  // Using uid, get the user's orgName.
+  const userData = await User.findOne({uid: uid});
+  const userOrgName = userData.orgName;
+
+  // Using orgName, find all closed events with same voter tag.
+  const eventsForUser = await Event.find({votersTag: userOrgName, isClosed: true});
+
+  // Create variable to store the results of all elections that the user may view.  
+  let resultsForUser = [];
+
+  // For each event, use the eid to get the results of the election.
+  for(const event of eventsForUser) {
+    const result = await Result.findOne({eid: event.eid});
+    resultsForUser.push(result);
+  }
+
+  const results = {resultsForUser: resultsForUser, authLevel: userData.authLevel};
+
+  // Send back open events as list of objects.
+  res.status(200).send(results);
+});
+
+
 // Set the voting for an event to be closed.
 router.post('/closeEvent', async (req, res, next) => {
   const eid = req.body.eid;
@@ -100,7 +130,35 @@ router.post('/closeEvent', async (req, res, next) => {
   }
   console.log(votes_dict)
 
-  // TODO: Store data for newly closed event on mongoDB under the "results" collection.
+  // Determine candidate cid with the most votes in votes_dict.
+  let winnerCID = "";
+  let winnerTally = 0;
+  for (const [key, value] of Object.entries(votes_dict)) {
+    if(value > winnerTally) {
+      winnerCID = key;
+      winnerTally = value;
+    }
+  }
+  console.log("Winner CID : " + winnerCID + "    " + "Winner tally: "+ winnerTally);
+
+  // Determine the winning candidate's name.
+  const candData = await Candidate.findOne({cid: winnerCID});
+  const candName = candData.fullName;
+  console.log("Winner name: " + candName);
+
+  // Create new 'results' item.
+  const newResult = new Result({
+    eid,
+    cid: winnerCID,
+    candidateName: candName,
+    candidateVotes: winnerTally,
+    eventName: modEvent.eventName,
+    startDate: modEvent.startDate,
+    endDate: modEvent.endDate,
+  });
+
+  // Store data for newly closed event on mongoDB under the "results" collection.
+  await newResult.save();
 
   // Send back a status to indicate success.
   res.status(200).send({msg: "Event closed for voting. Check view results page for details."});
