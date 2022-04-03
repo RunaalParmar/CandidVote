@@ -3,6 +3,19 @@
   const graphics_containerID = document.getElementById('graphics_containerID');
   
   const localhost_addr = 'http://localhost:5000';
+  
+  navigation.addEventListener('click' , () =>{
+    window.location.replace("../voterDashboard/dashboard_voter.html")
+  })
+  
+  log_out.addEventListener('click' , () =>{
+    // Clear session storage.
+    sessionStorage.clear();
+
+    // Delete residual cookies. // TODO: Fix deletion of cookie.
+    document.cookie.split(";").forEach(function(c) {
+      document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
 
   const addResult = (eventName , startDate , endDate , candidateName , candidateVotes) => {
     const name = document.createElement('div');
