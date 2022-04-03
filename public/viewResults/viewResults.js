@@ -28,6 +28,9 @@
     
     description.classList.add('card__event-description');
     
+    DateLabelOne.classList.add('card__date-label')
+    DateLabelOne.innerHTML = "Started On";
+    
     DateValueOne.classList.add('card__date_value');
     DateValueOne.innerHTML = startDate;
     
@@ -38,7 +41,7 @@
     
     
     DateLabelTwo.classList.add('card__date-label')
-    DateLabelTwo.innerHTML = "End Date";
+    DateLabelTwo.innerHTML = "Ended On";
     
     DateValueTwo.classList.add('card__date_value');
     DateValueTwo.innerHTML = endDate;

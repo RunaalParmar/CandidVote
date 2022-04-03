@@ -56,7 +56,7 @@ body{
   cursor: pointer;
   
 }
-.logout_text{
+.nav__logout-text{
   text-transform: lowercase;
 }
 .nav__logout:hover{
