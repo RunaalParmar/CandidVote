@@ -9,7 +9,7 @@
   navigation.addEventListener('click' , () =>{
     if(authLevel === "admin" || authLevel === "superAdmin") {
       window.location.replace("../adminDashboard/dashboard_admin.html");
-    } else if(authLevel === "user") {
+    } else if(authLevel === "voter") {
       window.location.replace("../voterDashboard/dashboard_voter.html");
     } else {
       window.location.replace("");
