@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const supertest = require("supertest");
 const createServer = require("../servers/user_server");
 const {User} = require("../models/users");
-const {Event} = require('../models/events');
 
 const app = createServer()
 beforeEach((done) => {
@@ -13,7 +12,7 @@ beforeEach((done) => {
 	)
 })
 
-test("To test: GET /loadEventsForUser", async () => {
+test("To test: GET /getUsers", async () => {
 	const post = await User.create({
 		firstname:"Sriram",
         surname:"Sivaraman",
